@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <conio.h>
 
 struct Kamar{ //struct untuk regis kamar
     int nomor;
@@ -32,23 +31,21 @@ void pilihan_tamu(int pilih){ //prosedur untuk menampilkan pilihan customer saat
     printf("\t\t\t\t||===================================== ||\n");
     printf("\t\t\t\t Masukkan pilihan: ");
     pilih = validasi_angka(0, 2);
-}
-void pengecekan_tamu(int pilih){ //prosedur jika customer meimilih pengecekan kamar
-    struct Kamar tamu;
-    pilihan_tamu(pilih);
+    system("cls");
     switch(pilih){
         case 1:
-            pengecekkan_tamu2(tamu);
+            pengecekkan_tamu2();
             break;
         case 2:
-            paket(pilih);
+            paket();
             break;
         default:
             //terima kasih
     }
 }
 //pemilihan paket pribadi atau keluarga.
-void paket(int pilih){  
+void paket(){
+    int pilih;  
 	printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t|| ******   Pilihan Paket Kamar  ****** ||\n");
@@ -73,7 +70,8 @@ void paket(int pilih){
     }
 }
 //mengecek tamu
-void pengecekkan_tamu2(struct Kamar tamu){
+void pengecekkan_tamu2(){
+    struct Kamar tamu;
     int nomor_kamar;
     char nik[16];
     printf("\t\t\t\t ||_________________________________________________|| \n");
@@ -81,16 +79,9 @@ void pengecekkan_tamu2(struct Kamar tamu){
     printf("\t\t\t\t ||======  Halo, pelanggan kami yang tercinta  =====||\n");
     printf("\t\t\t\t ||                                                 ||\n");
     printf("\t\t\t\t ||=================================================||\n");
-    printf("\t\t\t\t ||Silakan masukkan NIK Anda:     ");
-    scanf("%[^\n]", nik);
+    printf("\t\t\t\t ||Silakan masukkan NIK Anda: ");
+    scanf("%[^\n]",nik);
     getchar();
-    for(int i = 0; i < 16; i++){
-        if((int)nik[i] < 48 && (int)nik[i] > 57){
-            system("cls");
-            printf("\t\t\t\t Maaf, masukkan Anda salah!\n\t\t\t\t Silakan masukkan kembali!\n");
-            pengecekkan_tamu2(tamu);
-        }
-    }
     printf("\t\t\t\t Silakan masukkan nomor kamar Anda: ");
     nomor_kamar = validasi_angka(100, 305);
     FILE *cekdata = fopen("datatamu.txt","r");
@@ -100,7 +91,7 @@ void pengecekkan_tamu2(struct Kamar tamu){
         while(!feof(cekdata)){
             fscanf(cekdata, "%16[^,],%d\n", tamu.nik, &tamu.nomor);
             if(strcmp(tamu.nik,nik)==0){
-                //menuju ke fungsi menampilkan data.
+                printf("ada");
             }
         }fclose(cekdata);
     }
@@ -141,7 +132,7 @@ void keluarga(){
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
-    pilih_paket(pilih);
+    pilih_paket();
 }
 
 //fasilitas paket pribadi
@@ -177,11 +168,12 @@ void pribadi(){
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
-    pilih_paket(pilih);
+    pilih_paket();
 }
 
 //pilihan lama sewa
-void pilih_paket(int pilih){
+void pilih_paket(){
+    int pilih;
 	printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t|| ********    Pilihan Paket   ******** ||\n");
@@ -207,7 +199,7 @@ void pilih_paket(int pilih){
     }
 }
 void mainmenu(){
+    struct Kamar tamu;
     int pilih;
     pilihan_tamu(pilih);
-    return 0;
 }
