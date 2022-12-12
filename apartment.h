@@ -74,6 +74,7 @@ void pengecekkan_tamu2(){
     struct Kamar tamu;
     int nomor_kamar;
     char nik[16];
+    FILE *cekdata = fopen("datatamu.txt","r");
     printf("\t\t\t\t ||_________________________________________________|| \n");
     printf("\t\t\t\t ||                                                 || \n");
     printf("\t\t\t\t ||======  Halo, pelanggan kami yang tercinta  =====||\n");
@@ -84,7 +85,6 @@ void pengecekkan_tamu2(){
     getchar();
     printf("\t\t\t\t Silakan masukkan nomor kamar Anda: ");
     nomor_kamar = validasi_angka(100, 305);
-    FILE *cekdata = fopen("datatamu.txt","r");
     if(cekdata == NULL){
         printf("\t\t\t\t Maaf, kamu belum terdaftar di dalam buku tamu.\n");
     }else{
@@ -93,8 +93,9 @@ void pengecekkan_tamu2(){
             if(strcmp(tamu.nik,nik)==0){
                 printf("ada");
             }
-        }fclose(cekdata);
+        }
     }
+    fclose(cekdata);
 }
 //fasilitas paket keluarga
 void keluarga(){
