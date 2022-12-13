@@ -63,7 +63,31 @@ void pengecekan_apartemen(){
         }while(!feof(cekdata));
     }
 }
+void family_machine(struct Kamar tamu){
+    FILE *cekdata = fopen("datatamu.txt","r");
+    char nik[16];
+    int nomor;
+    printf("\t\t\t\t||Masukkan NIK Anda: ");
+    scanf("%[^\n]", tamu.nik);
+    getchar();
+    printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
+    tamu.nomor = validasi_angka(101, 305);
+    if(cekdata == NULL){
+        printf("\t\t\t\t Maaf program masih dalam pengembangan.\n");
+    }else{
+        while(!feof(cekdata)){
+            fscanf(cekdata, "%16[^,],%d\n", nik, &nomor);
+            if(strcmp(nik, tamu.nik) == 1 || nomor == tamu.nomor){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+            }else{
+                printf("\t\t\t\t Maaf program masih dalam pengembangan\n");
+            }
+        }
+    }
+    fclose(cekdata);
+}
 void fasilitas_keluarga(){
+    struct Kamar tamu;
     printf("\t\t\t\t|| ================================================== ||\n");
     printf("\t\t\t\t||               Facility of Family's Room            ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
@@ -113,9 +137,13 @@ void fasilitas_keluarga(){
     pilih = validasi_angka(0, 3);
     switch(pilih){
         case 1:
+            family_machine(tamu);
             break;
         case 2:
+            family_machine(tamu);
             break;
+        case 3:
+            family_machine(tamu);
         default:
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
