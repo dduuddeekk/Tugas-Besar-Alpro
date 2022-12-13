@@ -58,7 +58,7 @@ void pengecekan_apartemen(){
                 printf("\t\t\t\t Maaf, data ada.\n");
             }
             else{ 
-                printf("\t\t\t\t Data tidak ada. Kamu bisa melakukan penyewaan.");
+                printf("\t\t\t\t Data tidak ada. Kamu bisa melakukan penyewaan.\n");
             }
         }while(!feof(cekdata));
     }
@@ -201,17 +201,41 @@ void paketan(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 }
+void ulang_ulang();
 void mainmenu(){
-    menu();
-    pilih = validasi_angka(0, 2);
-    switch(pilih){
-        case 1:
-            pengecekan_apartemen();
-            break;
-        case 2:
-            paketan();
-            break;
-        default:
-            printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
-    }
+    int ulang;
+    do{
+        menu();
+        pilih = validasi_angka(0, 2);
+        switch(pilih){
+            case 1:
+                pengecekan_apartemen();
+                system("pause");
+                break;
+            case 2:
+                paketan();
+                system("pause");
+                break;
+            default:
+                printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
+                system("pause");
+        }
+        ulang_ulang();
+        ulang = validasi_angka(0, 1);
+        system("cls");
+        system("pause");
+        system("cls");
+    }while(ulang == 1);
+}
+void ulang_ulang(){
+    system("cls"); 
+	printf("\t\t\t\t|| ==================================== ||\n");
+    printf("\t\t\t\t||                                      ||\n");
+    printf("\t\t\t\t|| *****  Apakah ingin mengulang?  **** ||\n");
+    printf("\t\t\t\t||                                      ||\n");
+    printf("\t\t\t\t|| ==================================== ||\n");
+    printf("\t\t\t\t||   [0]    |     Tidak                 ||\n");
+    printf("\t\t\t\t||   [1]    |     Iya                   ||\n");
+    printf("\t\t\t\t||===================================== ||\n");
+    printf("\t\t\t\t||Masukkan pilihan: ");
 }
