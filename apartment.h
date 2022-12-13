@@ -86,6 +86,8 @@ void family_machine(struct Kamar tamu){
     }
     fclose(cekdata);
 }
+
+//PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR KELUARGA 
 void fasilitas_keluarga(){
     struct Kamar tamu;
     printf("\t\t\t\t|| ================================================== ||\n");
@@ -148,6 +150,7 @@ void fasilitas_keluarga(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 }
+//PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR PRIBADI 
 void fasilitas_pribadi(){
     printf("\t\t\t\t|| ================================================== ||\n");
     printf("\t\t\t\t||               Facility of Private Room             ||\n");
@@ -173,9 +176,9 @@ void fasilitas_pribadi(){
     printf("\t\t\t\t|| ================================================== ||\n");
     printf("\t\t\t\t||        Harga           |        Per                ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
-    printf("\t\t\t\t|| Rp 350.000,00          | per night                 ||\n");
-    printf("\t\t\t\t|| Rp 9.000.000,00        | per month                 ||\n");
-    printf("\t\t\t\t|| Rp 98.000.000,00       | per year                  ||\n");
+    printf("\t\t\t\t|| Rp 350.000,00          | per malam                 ||\n");
+    printf("\t\t\t\t|| Rp 9.000.000,00        | per bulan                 ||\n");
+    printf("\t\t\t\t|| Rp 98.000.000,00       | per tahun                 ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
@@ -202,6 +205,7 @@ void fasilitas_pribadi(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 }
+//PROSEDUR PILIHAN PAKET KAMAR 
 void paketan(){
     int pilih; 
     system("cls"); 
@@ -229,7 +233,36 @@ void paketan(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 }
+//PROSEDUR UNTUK TAMBAHAN LAYANAN YANG ADA DI APARTMENT 
+void tambahanlayanan (){ 
+    printf("\t\t\t\t|| ===================================================== ||\n");
+    printf("\t\t\t\t||                  LAYANAN TAMBAHAN                     ||\n");
+    printf("\t\t\t\t|| ======================================================||\n");
+    printf("\t\t\t\t||         L A Y A N A N         |       H A R G A       ||\n");
+    printf("\t\t\t\t|| ===================================================== ||\n");
+    printf("\t\t\t\t||   [1]  | Laundry              |  Rp. 8.000 /kg        ||\n");
+    printf("\t\t\t\t||   [2]  | Housekeeping         |  Rp. 5.000 /hari      ||\n");
+    printf("\t\t\t\t||   [3]  | Breakfast            |  Rp. 50.000 /porsi    ||\n");
+    printf("\t\t\t\t||   [4]  | Gym Area             |  Rp.                  ||\n");
+    printf("\t\t\t\t||   [5]  | Kembali ke menu awal                         ||\n");
+    printf("\t\t\t\t|| ===================================================== ||\n");
+}
+//TAMPILAN SELAMAT DATANG LAUNDRY 
+void laundry () {
+    printf("\t\t\t\t ==========================================================================\n");
+    printf("\t\t\t\t ||                         WELCOME TO APART LAUNDRY                     ||\n");
+    printf("\t\t\t\t || ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ||\n");
+    printf("\t\t\t\t ||                            I N F O R M A S I                         ||\n");
+    printf("\t\t\t\t ||                              L A U N D R Y                           ||\n");
+    printf("\t\t\t\t || ==================================================================== ||\n");
+    printf("\t\t\t\t || Laundry ini merupakan layanan tambahan yang ada di Dudek's Apartment ||\n");
+    printf("\t\t\t\t ||   customer dapat menggunakan layanan ini apabila sudah melakukan     ||\n");
+    printf("\t\t\t\t ||  registrasi di Apartment. Layanan laundry dihitung berdasarkan berat ||\n");
+    printf("\t\t\t\t ||        dari pakaian customer,setiap kg serharga Rp. 8.000,00.        ||\n");
+    printf("\t\t\t\t || ==================================================================== ||\n");
+}
 void ulang_ulang();
+
 void mainmenu(){
     int ulang;
     do{
@@ -255,6 +288,7 @@ void mainmenu(){
         system("cls");
     }while(ulang == 1);
 }
+//prosedur untuk pilihan ingin mengulang program 
 void ulang_ulang(){
     system("cls"); 
 	printf("\t\t\t\t|| ==================================== ||\n");
