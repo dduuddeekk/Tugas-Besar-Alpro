@@ -128,7 +128,7 @@ void check_apartment(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 }
-void pengecekan_apartemen(){
+void pengecekan_tempo(){ //jatuh tempo
     FILE *cekdata = fopen("datatamu.txt","r");
     struct Kamar tamu;
     char nik[16];
@@ -364,10 +364,11 @@ void mainmenu(){
         pilih = validasi_angka(0, 2);
         switch(pilih){
             case 1:
-                printf("Maaf masih dalam pengembangan.");
+                check_apartment();
+                system("pause");
                 break;
             case 2:
-                pengecekan_apartemen();
+                pengecekan_tempo();
                 system("pause");
                 break;
             case 3:
