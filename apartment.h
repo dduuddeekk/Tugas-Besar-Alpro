@@ -194,14 +194,17 @@ void pengecekan_tempo(){ //jatuh tempo
     }else{
         do{
             fscanf(cekdata, "%16[^,],%d\n", tamu.nik, &tamu.nomor);
-            if(strcmp(tamu.nik,nik)==1){ 
-                printf("\t\t\t\t Maaf, data ada.\n");
+            if(strcmp(tamu.nik,nik)==1 && tamu.nomor == nomor){
+                printf("\t\t\t\t Data Terverifikasi. (masih dalam masa pengembangan)\n"); //no kamar belom terverif
+                break;
             }
-            else{ 
-                printf("\t\t\t\t Data tidak ada. Kamu bisa melakukan penyewaan.\n");
+            else{
+                printf("\t\t\t\t Mohon maaf data tidak ada, mungkin Anda belum registrasi!.\n");
+                break;
             }
         }while(!feof(cekdata));
     }
+    fclose(cekdata);
 }
 void family_machine(struct Kamar tamu){
     FILE *cekdata = fopen("datatamu.txt","r");
