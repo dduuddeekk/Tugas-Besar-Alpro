@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
+
+
 int validasi_angka(int range1, int range2){
     char buff[1024], invalid;
     int valid;
@@ -26,8 +28,9 @@ void menu(){
     printf("\t\t\t\t|| ********   Pilihan Halaman  ******** ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t|| ==================================== ||\n");
-    printf("\t\t\t\t||   [1]    |   Pengecekan Apartemen    ||\n");
-    printf("\t\t\t\t||   [2]    |   Penyewaan Apartemen     ||\n");
+    printf("\t\t\t\t||   [1]    |   Pengecekan Apartemen    ||\n"); //di dalemnya isi
+    printf("\t\t\t\t||   [2]    |   Pengecekan Apartemen    ||\n");
+    printf("\t\t\t\t||   [3]    |   Penyewaan Apartemen     ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t||                            [0]KELUAR ||\n");
     printf("\t\t\t\t||===================================== ||\n");
@@ -117,9 +120,9 @@ void fasilitas_keluarga(){
     printf("\t\t\t\t|| ================================================== ||\n");
     printf("\t\t\t\t||        Harga           |        Per                ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
-    printf("\t\t\t\t|| Rp 500.000,00          | per night                 ||\n");
-    printf("\t\t\t\t|| Rp 13.500.000,00       | per month                 ||\n");
-    printf("\t\t\t\t|| Rp 156.000.000,00      | per year                  ||\n");
+    printf("\t\t\t\t|| Rp 500.000,00          | per malam                 ||\n");
+    printf("\t\t\t\t|| Rp 13.500.000,00       | per bulan                 ||\n");
+    printf("\t\t\t\t|| Rp 156.000.000,00      | per tahun                  ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
@@ -243,7 +246,6 @@ void tambahanlayanan (){
     printf("\t\t\t\t||   [1]  | Laundry              |  Rp. 8.000 /kg        ||\n");
     printf("\t\t\t\t||   [2]  | Housekeeping         |  Rp. 5.000 /hari      ||\n");
     printf("\t\t\t\t||   [3]  | Breakfast            |  Rp. 50.000 /porsi    ||\n");
-    printf("\t\t\t\t||   [4]  | Gym Area             |  Rp.                  ||\n");
     printf("\t\t\t\t||   [5]  | Kembali ke menu awal                         ||\n");
     printf("\t\t\t\t|| ===================================================== ||\n");
 }
@@ -258,7 +260,7 @@ void laundry () {
     printf("\t\t\t\t || Laundry ini merupakan layanan tambahan yang ada di Dudek's Apartment ||\n");
     printf("\t\t\t\t ||   customer dapat menggunakan layanan ini apabila sudah melakukan     ||\n");
     printf("\t\t\t\t ||  registrasi di Apartment. Layanan laundry dihitung berdasarkan berat ||\n");
-    printf("\t\t\t\t ||        dari pakaian customer,setiap kg serharga Rp. 8.000,00.        ||\n");
+    printf("\t\t\t\t ||        dari pakaian customer, setiap kg serharga Rp. 8.000,00.        ||\n");
     printf("\t\t\t\t || ==================================================================== ||\n");
 }
 void ulang_ulang();
