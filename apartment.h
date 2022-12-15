@@ -3,8 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
-
-
 int validasi_angka(int range1, int range2){
     char buff[1024], invalid;
     int valid;
@@ -29,12 +27,95 @@ void menu(){
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||   [1]    |   Pengecekan Apartemen    ||\n"); //di dalemnya isi
-    printf("\t\t\t\t||   [2]    |   Pengecekan Apartemen    ||\n");
+    printf("\t\t\t\t||   [2]    |   Pengecekan Jatuh Tempo  ||\n");
     printf("\t\t\t\t||   [3]    |   Penyewaan Apartemen     ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t||                            [0]KELUAR ||\n");
     printf("\t\t\t\t||===================================== ||\n");
     printf("\t\t\t\t||Masukkan pilihan: ");
+}
+void lantai_pertama(){ //untuk memeriksa pribadi lantai 1
+    struct Kamar tamu;
+    FILE *baca = fopen("datatamu.txt","r");
+    int i = 0;
+    if(baca == NULL){
+        printf("\t\t\t\t Belum ada kamar yang disewakan pada lantai ini.\n");
+    }else{
+        printf("\t\t\t\t Kamar yang sudah dipesan: \n");
+        while(!feof(baca)){
+            fscanf(baca, "%99[^\n],%d\n", tamu.nik, &tamu.nomor);
+            if(tamu.nik >= 101 && tamu.nik <= 105){
+                printf("%d. %d\n",i+1,tamu.nomor);
+                i++;
+            }else{
+                printf("\t\t\t\t Belum ada kamar yang disewakan pada lantai ini.\n");
+            }
+        }
+        fclose(baca);
+    }
+}
+void lantai_kedua(){ //untuk memeriksa pribadi lantai 2
+    struct Kamar tamu;
+    FILE *baca = fopen("datatamu.txt","r");
+    int i = 0;
+    if(baca == NULL){
+        printf("\t\t\t\t Belum ada kamar yang disewakan pada lantai ini.\n");
+    }else{
+        printf("\t\t\t\t Kamar yang sudah dipesan: \n");
+        while(!feof(baca)){
+            fscanf(baca, "%99[^\n],%d\n", tamu.nik, &tamu.nomor);
+            if(tamu.nik >= 201 && tamu.nik <= 205){
+                printf("%d. %d\n",i+1,tamu.nomor);
+                i++;
+            }else{
+                printf("\t\t\t\t Belum ada kamar yang disewakan pada lantai ini.\n");
+            }
+        }
+        fclose(baca);
+    }
+}
+void lantai_ketiga(){ //untuk memeriksa keluarga
+    struct Kamar tamu;
+    FILE *baca = fopen("datatamu.txt","r");
+    int i = 0;
+    if(baca == NULL){
+        printf("\t\t\t\t Belum ada kamar yang disewakan pada lantai ini.\n");
+    }else{
+        printf("\t\t\t\t Kamar yang sudah dipesan: \n");
+        while(!feof(baca)){
+            fscanf(baca, "%99[^\n],%d\n", tamu.nik, &tamu.nomor);
+            if(tamu.nik >= 201 && tamu.nik <= 205){
+                printf("%d. %d\n",i+1,tamu.nomor);
+                i++;
+            }else{
+                printf("\t\t\t\t Belum ada kamar yang disewakan pada lantai ini.\n");
+            }
+        }
+        fclose(baca);
+    }
+}
+void check_apartment(){
+    int pilih;
+    printf("\t\t\t\t|| ==================================== ||\n");
+    printf("\t\t\t\t||                                      ||\n");
+    printf("\t\t\t\t|| ******   Pilihan Paket Kamar  ****** ||\n");
+    printf("\t\t\t\t||                                      ||\n");
+    printf("\t\t\t\t|| ==================================== ||\n");
+    printf("\t\t\t\t||   [1]    |     Keluarga              ||\n");
+    printf("\t\t\t\t||   [2]    |     Pribadi               ||\n");
+    printf("\t\t\t\t||                                      ||\n");
+    printf("\t\t\t\t||                            [0]KELUAR ||\n");
+    printf("\t\t\t\t||===================================== ||\n");
+    printf("\t\t\t\t||Masukkan pilihan: ");
+    pilih = validasi_angka(0, 2);
+    switch(pilih){
+        case 1:
+            break;
+        case 2:
+            break;
+        default:
+            printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
+    }
 }
 void pengecekan_apartemen(){
     FILE *cekdata = fopen("datatamu.txt","r");
@@ -272,10 +353,13 @@ void mainmenu(){
         pilih = validasi_angka(0, 2);
         switch(pilih){
             case 1:
+                printf("Maaf masih dalam pengembangan.");
+                break;
+            case 2:
                 pengecekan_apartemen();
                 system("pause");
                 break;
-            case 2:
+            case 3:
                 paketan();
                 system("pause");
                 break;
