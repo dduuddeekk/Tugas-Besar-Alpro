@@ -3,6 +3,12 @@
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
+#define KELUARGA_MALAM 500000
+#define KELUARGA_BULAN 13500000
+#define KELUARGA_TAHUN 156000000
+#define PRIVATE_MALAM 350000
+#define PRIVATE_BULAN 9000000
+#define PPRIVATE_TAHUN 98000000
 int validasi_angka(int range1, int range2){
     char buff[1024], invalid;
     int valid;
@@ -30,7 +36,8 @@ void menu(){
     printf("\t\t\t\t||   [2]    |   Pengecekan Jatuh Tempo  ||\n");
     printf("\t\t\t\t||   [3]    |   Penyewaan Apartemen     ||\n");
     printf("\t\t\t\t||                                      ||\n");
-    printf("\t\t\t\t||                            [0]KELUAR ||\n");
+    printf("\t\t\t\t||                  [4]BATALKAN PESANAN ||\n");
+    printf("\t\t\t\t||                  [0]KELUAR           ||\n");
     printf("\t\t\t\t||===================================== ||\n");
     printf("\t\t\t\t||Masukkan pilihan: ");
 }
@@ -207,13 +214,16 @@ void tampilkan_tempo(int nomor){ //menampilkan jatuh tempo, tapi belum semua.
             buka = fopen("struk205.txt","r");
             break;
         case 301:
-            buka = fopen("struk101.txt","r");
+            buka = fopen("struk301.txt","r");
             break;
         case 302:
+            buka = fopen("struk302.txt","r");
             break;
         case 303:
+            buka = fopen("struk303.txt","r");
             break;
         case 304:
+            buka = fopen("struk304.txt","r");
             break;
         case 305:
             buka = fopen("struk305.txt","r");
@@ -459,7 +469,7 @@ void mainmenu(){
     int ulang;
     do{
         menu();
-        pilih = validasi_angka(0, 2);
+        pilih = validasi_angka(0, 3);
         switch(pilih){
             case 1:
                 check_apartment();
