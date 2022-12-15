@@ -84,7 +84,7 @@ void lantai_ketiga(){ //untuk memeriksa keluarga
         printf("\t\t\t\t Kamar yang sudah dipesan: \n");
         while(!feof(baca)){
             fscanf(baca, "%99[^\n],%d\n", tamu.nik, &tamu.nomor);
-            if(tamu.nik >= 201 && tamu.nik <= 205){
+            if(tamu.nik >= 301 && tamu.nik <= 305){
                 printf("%d. %d\n",i+1,tamu.nomor);
                 i++;
             }else{
@@ -110,6 +110,9 @@ void check_apartment(){
     pilih = validasi_angka(0, 2);
     switch(pilih){
         case 1:
+            lantai_ketiga();
+            break;
+        case 2:
             int piliih;
             printf("\t\t\t\t||Masukkan nomor lantai: ");
             piliih = validasi_angka(1, 2);
@@ -120,9 +123,6 @@ void check_apartment(){
                 default:
                     lantai_kedua();
             }
-            break;
-        case 2:
-            lantai_ketiga();
             break;
         default:
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
