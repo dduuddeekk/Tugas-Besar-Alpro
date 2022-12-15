@@ -110,8 +110,19 @@ void check_apartment(){
     pilih = validasi_angka(0, 2);
     switch(pilih){
         case 1:
+            int piliih;
+            printf("\t\t\t\t||Masukkan nomor lantai: ");
+            piliih = validasi_angka(1, 2);
+            switch(piliih){
+                case 1:
+                    lantai_pertama();
+                    break;
+                default:
+                    lantai_kedua();
+            }
             break;
         case 2:
+            lantai_ketiga();
             break;
         default:
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
