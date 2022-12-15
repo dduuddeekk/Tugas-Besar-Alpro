@@ -26,7 +26,7 @@ void menu(){
     printf("\t\t\t\t|| ********   Pilihan Halaman  ******** ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t|| ==================================== ||\n");
-    printf("\t\t\t\t||   [1]    |   Pengecekan Apartemen    ||\n"); //di dalemnya isi
+    printf("\t\t\t\t||   [1]    |   Pengecekan Apartemen    ||\n"); 
     printf("\t\t\t\t||   [2]    |   Pengecekan Jatuh Tempo  ||\n");
     printf("\t\t\t\t||   [3]    |   Penyewaan Apartemen     ||\n");
     printf("\t\t\t\t||                                      ||\n");
@@ -173,6 +173,55 @@ void check_apartment(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 } */
+void tampilkan_tempo(int nomor){ //menampilkan jatuh tempo, tapi belum semua.
+    FILE *buka;
+    switch(nomor){
+        case 101:
+            buka = fopen("struk101.txt","r");
+            break;
+        case 102:
+            buka = fopen("struk102.txt","r");
+            break;
+        case 103:
+            buka = fopen("struk103.txt","r");
+            break;
+        case 104:
+            buka = fopen("struk104.txt","r");
+            break;
+        case 105:
+            buka = fopen("struk105.txt","r");
+            break;
+        case 201:
+            buka = fopen("struk201.txt","r");
+            break;
+        case 202:
+            buka = fopen("struk202.txt","r");
+            break;
+        case 203:
+            buka = fopen("struk203.txt","r");
+            break;
+        case 204:
+            buka = fopen("struk204.txt","r");
+            break;
+        case 205:
+            buka = fopen("struk205.txt","r");
+            break;
+        case 301:
+            buka = fopen("struk101.txt","r");
+            break;
+        case 302:
+            break;
+        case 303:
+            break;
+        case 304:
+            break;
+        case 305:
+            buka = fopen("struk305.txt","r");
+            break;
+        default:
+            printf("\t\t\t\t Tidak ada.\n");
+    }
+}
 void pengecekan_tempo(){ //jatuh tempo
     FILE *cekdata = fopen("datatamu.txt","r");
     struct Kamar tamu;
@@ -195,7 +244,8 @@ void pengecekan_tempo(){ //jatuh tempo
         do{
             fscanf(cekdata, "%16[^,],%d\n", tamu.nik, &tamu.nomor);
             if(strcmp(tamu.nik,nik)==1 && tamu.nomor == nomor){
-                printf("\t\t\t\t Data Terverifikasi. (masih dalam masa pengembangan)\n"); //no kamar belom terverif
+                printf("\t\t\t\t Data Terverifikasi.\n"); //no kamar belom terverif
+                tampilkan_tempo(nomor);
                 break;
             }
             else{
