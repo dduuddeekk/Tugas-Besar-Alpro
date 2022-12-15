@@ -34,7 +34,7 @@ void menu(){
     printf("\t\t\t\t||===================================== ||\n");
     printf("\t\t\t\t||Masukkan pilihan: ");
 }
-void lantai_pertama(){ //untuk memeriksa pribadi lantai 1
+/* void lantai_pertama(){ //untuk memeriksa pribadi lantai 1
     struct Kamar tamu;
     FILE *baca = fopen("datatamu.txt","r");
     int i = 0;
@@ -93,8 +93,53 @@ void lantai_ketiga(){ //untuk memeriksa keluarga
         }
         fclose(baca);
     }
-}
+} */
+//menampilkan kamar yang tersedia (tapi masih nge-bug)
+//kalo bisa cari cara biar bisa nampilin kamar yg kosong juga 
 void check_apartment(){
+    struct Kamar tamu[15]; //array of struct
+    FILE *masuk;
+    int kamar[15];
+    int i;
+    if(masuk == NULL){
+        printf("\t\t\t\t Belum ada kamar yang disewakan.\n");
+    }else{
+        masuk = fopen("datatamu.txt","r");
+        while(!feof(masuk)){
+            fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &kamar[i]);
+            i++;
+        }
+        fclose(masuk);
+        for(i = 0; i < 15; i++){
+            for(int j = 0; j < 15 - i - 1; j++){
+                if(kamar[j] > kamar[j+1]){
+                    int temp = kamar[j];
+                    kamar[j] = kamar[j+1];
+                    kamar[j+1] = temp;
+                }
+            }
+        }
+        printf("\t\t\t\t Kamar yang sudah dipesan: \n");
+        for(i = 0; i < 15; i++){
+            printf("\t\t\t\t %d. %d\n",i+1,tamu[i].nomor);
+        }
+    }
+}
+/*void bubbleSort(int angka[], int size){
+	int i,j,temp;
+
+	for(i=0; i<size-1; i++){
+		for(j=0; j<size-1-i; j++){
+			if(angka[j] > angka[j+1]){
+				temp = angka[j];
+				angka[j] = angka[j+1];
+				angka
+                [j+1] = temp;
+			}
+		}
+	}
+*/
+/*
     int pilih;
     printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||                                      ||\n");
@@ -127,7 +172,7 @@ void check_apartment(){
         default:
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
-}
+} */
 void pengecekan_tempo(){ //jatuh tempo
     FILE *cekdata = fopen("datatamu.txt","r");
     struct Kamar tamu;
