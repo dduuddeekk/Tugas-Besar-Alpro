@@ -266,10 +266,15 @@ void pengecekan_tempo(){ //jatuh tempo
     }
     fclose(cekdata);
 }
-void family_machine(struct Kamar tamu){
+void family_machine_night(struct Kamar tamu){
     FILE *cekdata = fopen("datatamu.txt","r");
-    char nik[16];
-    int nomor;
+    FILE *tulis;
+    char nik[16], nama_pengguna[1024];
+    int nomor, n, harga;
+    system("cls");
+    printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
+    scanf("%[^\n]",nama_pengguna);
+    getchar();
     printf("\t\t\t\t||Masukkan NIK Anda: ");
     scanf("%[^\n]", tamu.nik);
     getchar();
@@ -282,8 +287,87 @@ void family_machine(struct Kamar tamu){
             fscanf(cekdata, "%16[^,],%d\n", nik, &nomor);
             if(strcmp(nik, tamu.nik) == 1 || nomor == tamu.nomor){
                 printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+                break;
             }else{
-                printf("\t\t\t\t Maaf program masih dalam pengembangan\n");
+                switch(tamu.nomor){
+                    case 101:
+                        tulis = fopen("struk101.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 102:
+                        tulis = fopen("struk102.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 103:
+                        tulis = fopen("struk103.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 104:
+                        tulis = fopen("struk104.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 105:
+                        tulis = fopen("struk105.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 201:
+                        tulis = fopen("struk201.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 202:
+                        tulis = fopen("struk202.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 203:
+                        tulis = fopen("struk203.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 204:
+                        tulis = fopen("struk204.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 205:
+                        tulis = fopen("struk205.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 301:
+                        tulis = fopen("struk301.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 302:
+                        tulis = fopen("struk302.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 303:
+                        tulis = fopen("struk303.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 304:
+                        tulis = fopen("struk304.txt","w");
+                        harga = n * KELUARGA_MALAM;
+                        fclose(tulis);
+                        break;
+                    case 305:
+                        tulis = fopen("struk305.txt","w");
+                        harga = n * KELUARGA_MALAM; 
+                        fclose(tulis);
+                        break;
+                    default:
+                        printf("Dadaaaaa....");
+                }
             }
         }
     }
@@ -326,7 +410,7 @@ void fasilitas_keluarga(){
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
-    int pilih;
+int pilih;
 	printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||                                      ||\n");
     printf("\t\t\t\t|| ********    Pilihan Paket   ******** ||\n");
@@ -342,13 +426,13 @@ void fasilitas_keluarga(){
     pilih = validasi_angka(0, 3);
     switch(pilih){
         case 1:
-            family_machine(tamu);
+            family_machine_night(tamu); //ini dia
             break;
         case 2:
-            family_machine(tamu);
+            //family_machine_month(tamu);
             break;
         case 3:
-            family_machine(tamu);
+            //family_machine_year(tamu);
         default:
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
