@@ -307,11 +307,11 @@ void family_machine_night(struct Kamar tamu){
     scanf("%[^\n]", tamu.nik);
     getchar();
     for(int i = 0; i < 16; i++){
-        if(sizeof(tamu.nik) > 16){
+        if(strlen(tamu.nik) > 16){
             printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
             family_machine_night(tamu);
-        }else if(sizeof(tamu.nik) < 16){
+        }else if(strlen(tamu.nik) < 16){
             printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
             family_machine_night(tamu);
@@ -449,7 +449,7 @@ void fasilitas_keluarga(){
     printf("\t\t\t\t|| ================================================== ||\n");
     printf("\t\t\t\t|| Rp 500.000,00          | per malam                 ||\n");
     printf("\t\t\t\t|| Rp 13.500.000,00       | per bulan                 ||\n");
-    printf("\t\t\t\t|| Rp 156.000.000,00      | per tahun                  ||\n");
+    printf("\t\t\t\t|| Rp 156.000.000,00      | per tahun                 ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
