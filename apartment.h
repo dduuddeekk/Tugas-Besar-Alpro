@@ -109,6 +109,7 @@ void check_apartment(){
     int kamar[15];
     int i, baca;
     masuk = fopen("datatamu.txt","r");
+    /*
     if(masuk == NULL){
         printf("\t\t\t\t Belum ada kamar yang disewakan.\n");
     }else{
@@ -122,6 +123,7 @@ void check_apartment(){
             }
         }while(!feof(masuk));
     }
+    */
     fclose(masuk);
 }
 /*void bubbleSort(int angka[], int size){
