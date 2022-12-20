@@ -102,8 +102,7 @@ void lantai_ketiga(){ //untuk memeriksa keluarga
         fclose(baca);
     }
 } */
-//menampilkan kamar yang tersedia (tapi masih nge-bug)
-//kalo bisa cari cara biar bisa nampilin kamar yg kosong juga 
+//menampilkan kamar yang tersedia
 void check_apartment(){
     struct Kamar tamu[15]; //array of struct (gg boys)
     FILE *masuk;
@@ -119,26 +118,23 @@ void check_apartment(){
         }
         for(int i = 0; i < 15; i++){
             for(int j = 0; j < 15 - i - 1; j++){
-                if(kamar[j] > kamar[j+1]){
+                if(kamar[j] < kamar[j+1]){
                     int temp = kamar[j];
                     kamar[j] = kamar[j+1];
                     kamar[j+1] = temp;
                 }
             }
         }
+        //jadi, kamar diurutkan dari nomor yang terbesar.
         printf("\t\t\t\t Kamar yang sudah dipesan: \n");
         for(int i = 0; i < 15; i++){
-            printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
-            if(kamar[i]> 305 || kamar[i] < 101){
-                break;
-            }else{
-                continue;
-            }
+            if(kamar[i] == 0) printf("\0");
+            else printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
         }
         fclose(masuk);
     }
-    
     /*
+    //yang ini tidak jadi karena terjadi bug
     if(masuk == NULL){
         printf("\t\t\t\t Belum ada kamar yang disewakan.\n");
     }else{
