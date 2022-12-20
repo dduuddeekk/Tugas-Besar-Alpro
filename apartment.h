@@ -587,7 +587,7 @@ void laundry () {
     printf("\t\t\t\t || Laundry ini merupakan layanan tambahan yang ada di Dudek's Apartment ||\n");
     printf("\t\t\t\t ||   customer dapat menggunakan layanan ini apabila sudah melakukan     ||\n");
     printf("\t\t\t\t ||  registrasi di Apartment. Layanan laundry dihitung berdasarkan berat ||\n");
-    printf("\t\t\t\t ||        dari pakaian customer, setiap kg serharga Rp. 8.000,00.        ||\n");
+    printf("\t\t\t\t ||        dari pakaian customer, setiap kg serharga Rp. 8.000,00.       ||\n");
     printf("\t\t\t\t || ==================================================================== ||\n");
 }
 void ulang_ulang();
