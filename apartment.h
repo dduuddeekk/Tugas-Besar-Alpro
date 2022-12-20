@@ -24,6 +24,7 @@ int validasi_angka(int range1, int range2){
 struct Kamar{
     char nik[16];
     int nomor;
+    int nomork[15];
 };
 int pilih;
 void menu(){
@@ -104,11 +105,39 @@ void lantai_ketiga(){ //untuk memeriksa keluarga
 //menampilkan kamar yang tersedia (tapi masih nge-bug)
 //kalo bisa cari cara biar bisa nampilin kamar yg kosong juga 
 void check_apartment(){
-    struct Kamar tamu[15]; //array of struct
+    struct Kamar tamu[15]; //array of struct (gg boys)
     FILE *masuk;
     int kamar[15];
-    int i, baca;
     masuk = fopen("datatamu.txt","r");
+    if(masuk == NULL){
+        printf("\t\t\t\t Berkas belum ada atau belum dibuat, terima kasih.\n");
+    }else{
+        while(!feof(masuk)){
+            for(int i = 0; i < 15; i++){
+                fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &kamar[i]);
+            }
+        }
+        for(int i = 0; i < 15; i++){
+            for(int j = 0; j < 15 - i - 1; j++){
+                if(kamar[j] > kamar[j+1]){
+                    int temp = kamar[j];
+                    kamar[j] = kamar[j+1];
+                    kamar[j+1] = temp;
+                }
+            }
+        }
+        printf("\t\t\t\t Kamar yang sudah dipesan: \n");
+        for(int i = 0; i < 15; i++){
+            printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
+            if(kamar[i]> 305 || kamar[i] < 101){
+                break;
+            }else{
+                continue;
+            }
+        }
+        fclose(masuk);
+    }
+    
     /*
     if(masuk == NULL){
         printf("\t\t\t\t Belum ada kamar yang disewakan.\n");
