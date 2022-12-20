@@ -108,15 +108,14 @@ void check_apartment(){
     FILE *masuk;
     int kamar[15];
     int i;
+    masuk = fopen("datatamu.txt","r");
     if(masuk == NULL){
         printf("\t\t\t\t Belum ada kamar yang disewakan.\n");
     }else{
-        masuk = fopen("datatamu.txt","r");
         while(!feof(masuk)){
             fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &kamar[i]);
             i++;
         }
-        fclose(masuk);
         for(i = 0; i < 15; i++){
             for(int j = 0; j < 15 - i - 1; j++){
                 if(kamar[j] > kamar[j+1]){
@@ -128,9 +127,10 @@ void check_apartment(){
         }
         printf("\t\t\t\t Kamar yang sudah dipesan: \n");
         for(i = 0; i < 15; i++){
-            printf("\t\t\t\t %d. %d\n",i+1,tamu[i].nomor);
+            printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
         }
     }
+    fclose(masuk);
 }
 /*void bubbleSort(int angka[], int size){
 	int i,j,temp;
