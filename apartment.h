@@ -107,28 +107,20 @@ void check_apartment(){
     struct Kamar tamu[15]; //array of struct
     FILE *masuk;
     int kamar[15];
-    int i;
+    int i, baca;
     masuk = fopen("datatamu.txt","r");
     if(masuk == NULL){
         printf("\t\t\t\t Belum ada kamar yang disewakan.\n");
     }else{
-        while(!feof(masuk)){
-            fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &kamar[i]);
+        do{
+            baca = fscanf(masuk, "%99[^,],%d\n", tamu[i].nomor, kamar[i]);
             i++;
-        }
-        for(i = 0; i < 15; i++){
-            for(int j = 0; j < 15 - i - 1; j++){
-                if(kamar[j] > kamar[j+1]){
-                    int temp = kamar[j];
-                    kamar[j] = kamar[j+1];
-                    kamar[j+1] = temp;
-                }
+            if(baca == 2){
+                printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
+            }else{
+                printf("\t\t\t\t Belum ada kamar yang disewakan.");
             }
-        }
-        printf("\t\t\t\t Kamar yang sudah dipesan: \n");
-        for(i = 0; i < 15; i++){
-            printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
-        }
+        }while(!feof(masuk));
     }
     fclose(masuk);
 }
