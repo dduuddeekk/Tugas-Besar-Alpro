@@ -294,9 +294,33 @@ void family_machine_night(struct Kamar tamu){
     printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
     scanf("%[^\n]",nama_pengguna);
     getchar();
+    /* This is supposed to be validation
+    for(int i = 0; i < 1024; i++){
+        if(((int)nama_pengguna[i] >= 0 && (int)nama_pengguna[i] <= 64) || ((int)nama_pengguna[i] >= 91 && (int)nama_pengguna[i] <= 96) || (int)nama_pengguna[i] >= 123){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Anda memasukkan karakter yang bukan huruf!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }
+    }
+    */
     printf("\t\t\t\t||Masukkan NIK Anda: ");
     scanf("%[^\n]", tamu.nik);
     getchar();
+    for(int i = 0; i < 16; i++){
+        if(sizeof(tamu.nik) > 16){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }else if(sizeof(tamu.nik) < 16){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }else if((int)tamu.nik[i] < '0' || (int)tamu.nik[i] > '9'){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }
+    }
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(101, 305);
     if(cekdata == NULL){
