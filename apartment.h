@@ -649,7 +649,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                    printf("   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        printf("%c",tamu.nik[i]);
+                    }
+                    printf("\n");
                     printf("   Nomor Kamar     : %d\n", tamu.nomor);
                     printf("   Total           : Rp. %d\n", harga);
                     printf("\n");
@@ -662,7 +666,10 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "==================================================\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                    for(int i = 0; i < 16; i++){
+                        fprintf(tulis, "%c",tamu.nik[i]);
+                    }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
                     fprintf(tulis, "\n");
@@ -677,7 +684,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                    printf("   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        printf("%c",tamu.nik[i]);
+                    }
+                    printf("\n");
                     printf("   Nomor Kamar     : Rp. %d\n", tamu.nomor);
                     printf("   Total           : %d\n", harga);
                     printf("\n");
@@ -690,7 +701,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "==================================================\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                    fprintf(tulis, "   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        fprintf(tulis, "%c",tamu.nik[i]);
+                    }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
                     fprintf(tulis, "\n");
@@ -707,7 +722,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                    printf("   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        printf("%c",tamu.nik[i]);
+                    }
+                    printf("\n");
                     printf("   Nomor Kamar     : %d\n", tamu.nomor);
                     printf("   Total           : Rp. %d\n", harga);
                     printf("\n");
@@ -720,7 +739,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "==================================================\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                    fprintf(tulis, "   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        fprintf(tulis, "%c",tamu.nik[i]);
+                    }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
                     fprintf(tulis, "\n");
@@ -735,7 +758,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                    printf("   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        printf("%c",tamu.nik[i]);
+                    }
+                    printf("\n");
                     printf("   Nomor Kamar     : %d\n", tamu.nomor);
                     printf("   Total           : Rp. %d\n", harga);
                     printf("\n");
@@ -748,7 +775,11 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "==================================================\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                    fprintf(tulis, "   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        fprintf(tulis, "%c",tamu.nik[i]);
+                    }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
                     fprintf(tulis, "\n");
