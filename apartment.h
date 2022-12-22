@@ -286,15 +286,89 @@ void pengecekan_tempo(){ //jatuh tempo
     }
     fclose(cekdata);
 }
-void family_machine_night(struct Kamar tamu){
-    //waktu menggunakan localtime.
+void struk_familynight(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis){
     time_t waktu;
     waktu = time(NULL);
     struct tm tm = *localtime(&waktu);
+    if(tm.tm_year % 4 == 0){
+        if(tm.tm_mon == 2){
+            if((tm.tm_mday + n) > 29){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK             : %s\n", tamu.nik);
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : %d\n", n*KELUARGA_MALAM);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-29),(tm.tm_mon+1),tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK             : %s\n", tamu.nik);
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : %d\n", n*KELUARGA_MALAM);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-29),(tm.tm_mon+1),tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }else{
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK             : %s\n", tamu.nik);
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : %d\n", n*KELUARGA_MALAM);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK             : %s\n", tamu.nik);
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : %d\n", n*KELUARGA_MALAM);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }
+        }else{
+            if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+                //struk
+            }else if(tm.tm_mon == 12){
+                //struk
+            }else{
+                //struk
+            }
+        }
+    }else{
+        //sama seperti di atas tapi bedanya februarinya 28
+    }
+}
+void family_machine_night(struct Kamar tamu){
+    //waktu menggunakan localtime.
     FILE *cekdata = fopen("datatamu.txt","r");
     FILE *tulis;
     char nik[16], nama_pengguna[1024];
-    int nomor, n, harga;
+    //n adalah lama menyewa;
+    int nomor, n, harga, lama;
     system("cls");
     printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
     scanf("%[^\n]",nama_pengguna);
@@ -329,7 +403,7 @@ void family_machine_night(struct Kamar tamu){
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(101, 305);
     printf("\t\t\t\t||Berapa malam Anda hendak menyewa: ");
-    int lama = validasi_angka(0, 29);
+    n = validasi_angka(0, 29);
     if(cekdata == NULL){
         printf("\t\t\t\t Maaf program masih dalam pengembangan.\n");
     }else{
@@ -343,6 +417,8 @@ void family_machine_night(struct Kamar tamu){
                     case 101:
                         tulis = fopen("struk101.txt","w");
                         harga = n * KELUARGA_MALAM;
+                        struk_familynight(nama_pengguna, tamu, n, harga, tulis);
+                        /*
                         printf("==================================================\n");
                         printf("\n");
                         printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -370,6 +446,7 @@ void family_machine_night(struct Kamar tamu){
                         fprintf(tulis, "\n");
                         fprintf(tulis, "==================================================\n");
                         fclose(tulis);
+                        */
                         break;
                     case 102:
                         tulis = fopen("struk102.txt","w");
