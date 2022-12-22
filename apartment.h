@@ -590,13 +590,103 @@ void laundry () {
     printf("\t\t\t\t ||        dari pakaian customer, setiap kg serharga Rp. 8.000,00.       ||\n");
     printf("\t\t\t\t || ==================================================================== ||\n");
 }
-void ulang_ulang();
 
+// PROSEDUR BATALKAN PESANAN
+void batalkan_pesanan(){
+    struct Kamar tamu[15], kamar;
+    int read, i = 0;
+    FILE *masuk, *keluar;
+    printf("\t\t\t\t||Masukkan NIK Anda: ");
+    scanf("%[^\n]",kamar.nik);
+    getchar();
+    for(int i = 0; i < 16; i++){
+        if(strlen(kamar.nik) > 16){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            batalkan_pesanan();
+        }else if(strlen(kamar.nik) < 16){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            batalkan_pesanan();
+        }else if((int)kamar.nik[i] < '0' || (int)kamar.nik[i] > '9'){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            batalkan_pesanan();
+        }
+    }
+    printf("\t\t\t\t||Masukkan nomor kamar Anda: ");
+    kamar.nomor = validasi_angka(101, 305);
+    masuk = fopen("datatamu.txt","r");
+    keluar = fopen("backup.txt","a");
+    do{
+        read = fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &tamu[i].nomor);
+        if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
+            continue;
+        }
+        else{
+            fprintf(keluar,"%s,%d\n", tamu[i].nik, tamu[i].nomor);
+        }
+        i++;
+    }while(!feof(masuk));
+    fclose(keluar);
+    fclose(masuk);
+    remove("datatamu.txt");
+    rename("backup.txt", "datatamu.txt");
+    switch(kamar.nomor){
+        case 101:
+            remove("struk101.txt");
+            break;
+        case 102:
+            remove("struk102.txt");
+            break;
+        case 103:
+            remove("struk103.txt");
+            break;
+        case 104:
+            remove("struk104.txt");
+            break;
+        case 105:
+            remove("struk105.txt");
+            break;
+        case 201:
+            remove("struk201.txt");
+            break;
+        case 202:
+            remove("struk202.txt");
+            break;
+        case 203:
+            remove("struk203.txt");
+            break;
+        case 204:
+            remove("struk204.txt");
+            break;
+        case 205:
+            remove("struk205.txt");
+            break;
+        case 301:
+            remove("struk301.txt");
+            break;
+        case 302:
+            remove("struk302.txt");
+            break;
+        case 303:
+            remove("struk303.txt");
+            break;
+        case 304:
+            remove("struk304.txt");
+            break;
+        default:
+            remove("struk305.txt");
+            break;
+    }
+}
+
+void ulang_ulang();
 void mainmenu(){
     int ulang;
     do{
         menu();
-        pilih = validasi_angka(0, 3);
+        pilih = validasi_angka(0, 4);
         switch(pilih){
             case 1:
                 check_apartment();
@@ -609,6 +699,9 @@ void mainmenu(){
             case 3:
                 paketan();
                 system("pause");
+                break;
+            case 4:
+                batalkan_pesanan();
                 break;
             default:
                 printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
