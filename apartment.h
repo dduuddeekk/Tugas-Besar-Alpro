@@ -591,7 +591,12 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                    printf("   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        if (i >= 16) break;
+                        printf("%c",tamu.nik[i]);
+                    }
+                    printf("\n");
                     printf("   Nomor Kamar     : %d\n", tamu.nomor);
                     printf("   Total           : Rp. %d\n", harga);
                     printf("\n");
@@ -604,7 +609,12 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     fprintf(tulis, "==================================================\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                    fprintf(tulis, "   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        if (i >= 16) break;
+                        fprintf(tulis, "%c",tamu.nik[i]);
+                    }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
                     fprintf(tulis, "\n");
@@ -619,7 +629,12 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                    printf("   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        if (i >= 16) break;
+                        printf("%c",tamu.nik[i]);
+                    }
+                    printf("\n");
                     printf("   Nomor Kamar     : %d\n", tamu.nomor);
                     printf("   Total           : Rp. %d\n", harga);
                     printf("\n");
@@ -632,7 +647,12 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     fprintf(tulis, "==================================================\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                    fprintf(tulis, "   NIK (ID tamu)   : ");
+                    for(int i = 0; i < 16; i++){
+                        if (i >= 16) break;
+                        fprintf(tulis, "%c",tamu.nik[i]);
+                    }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
                     fprintf(tulis, "\n");
@@ -651,9 +671,10 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         printf("%c",tamu.nik[i]);
                     }
+                    printf("\n");
                     printf("\n");
                     printf("   Nomor Kamar     : %d\n", tamu.nomor);
                     printf("   Total           : Rp. %d\n", harga);
@@ -668,9 +689,10 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
@@ -688,9 +710,10 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         printf("%c",tamu.nik[i]);
                     }
+                    printf("\n");
                     printf("\n");
                     printf("   Nomor Kamar     : Rp. %d\n", tamu.nomor);
                     printf("   Total           : %d\n", harga);
@@ -706,9 +729,10 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     fprintf(tulis, "   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
+                    fprintf(tulis, "\n");
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                     fprintf(tulis, "   Total           : Rp. %d\n", harga);
@@ -728,7 +752,7 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         printf("%c",tamu.nik[i]);
                     }
                     printf("\n");
@@ -746,7 +770,7 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     fprintf(tulis, "   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
                     fprintf(tulis, "\n");
@@ -766,7 +790,7 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         printf("%c",tamu.nik[i]);
                     }
                     printf("\n");
@@ -784,7 +808,7 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     fprintf(tulis, "   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
-                        if (i >= 16) continue;
+                        if (i >= 16) break;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
                     fprintf(tulis, "\n");
