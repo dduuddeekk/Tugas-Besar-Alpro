@@ -922,7 +922,7 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
         }
     }
 }
-void family_machine_night(struct Kamar tamu){
+void sewa_keluarga_malam(struct Kamar tamu){
     //waktu menggunakan localtime.
     FILE *cekdata = fopen("datatamu.txt","r");
     FILE *tulis;
@@ -951,27 +951,28 @@ void family_machine_night(struct Kamar tamu){
         if(strlen(tamu.nik) > 16){
             printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
-            family_machine_night(tamu);
+            sewa_keluarga_malam(tamu);
         }else if(strlen(tamu.nik) < 16){
             printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
-            family_machine_night(tamu);
+            sewa_keluarga_malam(tamu);
         }else if((int)tamu.nik[i] < '0' || (int)tamu.nik[i] > '9'){
             printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
-            family_machine_night(tamu);
+            sewa_keluarga_malam(tamu);
         }
     }
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(301, 305);
     printf("\t\t\t\t||Berapa malam Anda hendak menyewa: ");
     n = validasi_angka(0, 29);
+    system("cls");
     if(cekdata == NULL){
         printf("\t\t\t\t Maaf program masih dalam pengembangan.\n");
     }else{
         while(!feof(cekdata)){
             fscanf(cekdata, "%16[^,],%d\n", nik, &nomor);
-            if(strcmp(nik, tamu.nik) == 0 || nomor == tamu.nomor){
+            if(strcmp(nik, tamu.nik) == 1 || nomor == tamu.nomor){
                 printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
                 break;
             }else{
@@ -1014,10 +1015,12 @@ void family_machine_night(struct Kamar tamu){
     }
     fclose(cekdata);
     datatamu = fopen("datatamu.txt","a");
-    fprintf(datatamu, "%s,%d\n", tamu.nik, tamu.nomor);
+    for(int j = 0; j < 16; j++){
+        if(j >= 16) break;
+        else fprintf(datatamu, "%c", tamu.nik[j]);
+    }fprintf(datatamu, ",%d\n", tamu.nomor);
     fclose(datatamu);
 }
-
 //PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR KELUARGA 
 void fasilitas_keluarga(){
     struct Kamar tamu;
@@ -1070,7 +1073,7 @@ void fasilitas_keluarga(){
     pilih = validasi_angka(0, 3);
     switch(pilih){
         case 1:
-            family_machine_night(tamu); //ini dia
+            sewa_keluarga_malam(tamu); //ini dia
             break;
         case 2:
             //family_machine_month(tamu);
@@ -1196,7 +1199,7 @@ void laundry () {
 void batalkan_pesanan(){
     struct Kamar tamu[15], kamar;
     int read, i = 0;
-    FILE *masuk, *keluar;
+    FILE *masuk, *keluar, *riwayat;
     printf("\t\t\t\t||Masukkan NIK Anda: ");
     scanf("%[^\n]",kamar.nik);
     getchar();
@@ -1219,6 +1222,15 @@ void batalkan_pesanan(){
     kamar.nomor = validasi_angka(101, 305);
     masuk = fopen("datatamu.txt","r");
     keluar = fopen("backup.txt","a");
+    /*
+    riwayat = fopen("riwayat.txt","a");
+    do{
+        read = fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &tamu[i].nomor);
+        fprintf(keluar,"%s,%d\n", kamar.nik, kamar.nomor);
+        i++;
+    }while(!feof(masuk));
+    fclose(riwayat);
+    */
     do{
         read = fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &tamu[i].nomor);
         if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
