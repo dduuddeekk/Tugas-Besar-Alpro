@@ -289,34 +289,124 @@ void pengecekan_tempo(){ //jatuh tempo
 void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis){
     waktu = time(NULL);
     struct tm tm = *localtime(&waktu);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
     int a = tm.tm_mday + n;
     if(tm.tm_year % 4 == 0){
-        if(tm.tm_mon == 2){
+        if(tm.tm_mon == 12){
+            if(a > 31){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }else{
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }
+        }else if(tm.tm_mon == 2){
             if(a > 29){
                 printf("==================================================\n");
                 printf("\n");
                 printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
                 printf("   Nomor Kamar     : %d\n", tamu.nomor);
                 printf("   Total           : Rp. %d\n", harga);
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-29),(tm.tm_mon+1),tm.tm_year);
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-29, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
                 fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
                 fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                 fprintf(tulis, "   Total           : Rp. %d\n", harga);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-29),(tm.tm_mon+1),tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-29, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -324,235 +414,313 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("==================================================\n");
                 printf("\n");
                 printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
                 printf("   Nomor Kamar     : %d\n", tamu.nomor);
                 printf("   Total           : Rp. %d\n", harga);
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
                 fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
                 fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                 fprintf(tulis, "   Total           : Rp. %d\n", harga);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }
+        }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+            if(a > 31){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }else{
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
             }
         }else{
-            if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
-                if(a > 31){
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),(tm.tm_mon+1),tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),(tm.tm_mon+1),tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
-                }else{
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
+            if(a > 30){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
                 }
-            }else if(tm.tm_mon == 12){
-                if(a > 31){
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),((tm.tm_mon+1)-12),tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),((tm.tm_mon+1)-12),tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
-                }else{
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
-                    printf("   Nomor Kamar     : Rp. %d\n", tamu.nomor);
-                    printf("   Total           : %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
                 }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
             }else{
-                if(a > 30){
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-30),(tm.tm_mon+1),tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-30),(tm.tm_mon+1),tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
-                }else{
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
                 }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
             }
         }
     }else{
-        if(tm.tm_mon == 2){
+        if(tm.tm_mon == 12){
+            if(a > 31){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }else{
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }
+        }else if(tm.tm_mon == 2){
             if(a > 28){
                 printf("==================================================\n");
                 printf("\n");
                 printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
                 printf("   Nomor Kamar     : %d\n", tamu.nomor);
                 printf("   Total           : Rp. %d\n", harga);
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-28),(tm.tm_mon+1),tm.tm_year);
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-28, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
                 fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
                 fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                 fprintf(tulis, "   Total           : Rp. %d\n", harga);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-29),(tm.tm_mon+1),tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-28, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -560,269 +728,196 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("==================================================\n");
                 printf("\n");
                 printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
                 printf("   Nomor Kamar     : %d\n", tamu.nomor);
                 printf("   Total           : Rp. %d\n", harga);
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
                 fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
                 fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
                 fprintf(tulis, "   Total           : Rp. %d\n", harga);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }
+        }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+            if(a > 31){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
+            }else{
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
+                }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
             }
         }else{
-            if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
-                if(a > 31){
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        printf("%c",tamu.nik[i]);
-                    }
-                    printf("\n");
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),(tm.tm_mon+1),tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        fprintf(tulis, "%c",tamu.nik[i]);
-                    }
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),(tm.tm_mon+1),tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
-                }else{
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        printf("%c",tamu.nik[i]);
-                    }
-                    printf("\n");
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        fprintf(tulis, "%c",tamu.nik[i]);
-                    }
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
+            if(a > 30){
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
                 }
-            }else if(tm.tm_mon == 12){
-                if(a > 31){
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        printf("%c",tamu.nik[i]);
-                    }
-                    printf("\n");
-                    printf("\n");
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),((tm.tm_mon+1)-12),tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        fprintf(tulis, "%c",tamu.nik[i]);
-                    }
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-31),((tm.tm_mon+1)-12),tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
-                }else{
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        printf("%c",tamu.nik[i]);
-                    }
-                    printf("\n");
-                    printf("\n");
-                    printf("   Nomor Kamar     : Rp. %d\n", tamu.nomor);
-                    printf("   Total           : %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        fprintf(tulis, "%c",tamu.nik[i]);
-                    }
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
                 }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
             }else{
-                if(a > 30){
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        printf("%c",tamu.nik[i]);
-                    }
-                    printf("\n");
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-30),(tm.tm_mon+1),tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        fprintf(tulis, "%c",tamu.nik[i]);
-                    }
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",((tm.tm_mday+n)-30),(tm.tm_mon+1),tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
-                }else{
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Nama Pemilik    : %s\n", nama_pengguna);
-                    printf("   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        printf("%c",tamu.nik[i]);
-                    }
-                    printf("\n");
-                    printf("   Nomor Kamar     : %d\n", tamu.nomor);
-                    printf("   Total           : Rp. %d\n", harga);
-                    printf("\n");
-                    printf("==================================================\n");
-                    printf("\n");
-                    printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    printf("\n");
-                    printf("==================================================\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
-                    fprintf(tulis, "   NIK (ID tamu)   : ");
-                    for(int i = 0; i < 16; i++){
-                        if (i >= 16) break;
-                        fprintf(tulis, "%c",tamu.nik[i]);
-                    }
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
-                    fprintf(tulis, "   Total           : Rp. %d\n", harga);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n),tm.tm_mon,tm.tm_year);
-                    fprintf(tulis, "\n");
-                    fprintf(tulis, "==================================================\n");
-                    fclose(tulis);
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Nama Pemilik    : %s\n", nama_pengguna);
+                printf("   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else printf("%c", tamu.nik[i]);
                 }
+                printf("\n");
+                printf("   Nomor Kamar     : %d\n", tamu.nomor);
+                printf("   Total           : Rp. %d\n", harga);
+                printf("\n");
+                printf("==================================================\n");
+                printf("\n");
+                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("\n");
+                printf("==================================================\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+                fprintf(tulis, "   NIK (ID tamu)   : ");
+                for(int i = 0; i < 16; i++){
+                    if(i >= 16) break;
+                    else fprintf(tulis, "%c", tamu.nik[i]);
+                }
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+                fprintf(tulis, "   Total           : Rp. %d\n", harga);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fprintf(tulis, "\n");
+                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "\n");
+                fprintf(tulis, "==================================================\n");
+                fclose(tulis);
             }
         }
     }
