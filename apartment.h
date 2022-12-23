@@ -286,13 +286,13 @@ void pengecekan_tempo(){ //jatuh tempo
     }
     fclose(cekdata);
 }
-void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis){
-    time_t waktu;
+void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis){
     waktu = time(NULL);
     struct tm tm = *localtime(&waktu);
+    int a = tm.tm_mday + n;
     if(tm.tm_year % 4 == 0){
         if(tm.tm_mon == 2){
-            if((tm.tm_mday + n) > 29){
+            if(a > 29){
                 printf("==================================================\n");
                 printf("\n");
                 printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -351,7 +351,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
             }
         }else{
             if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
-                if((tm.tm_mday + n) > 31){
+                if(a > 31){
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -409,7 +409,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fclose(tulis);
                 }
             }else if(tm.tm_mon == 12){
-                if((tm.tm_mday + n) > 31){
+                if(a > 31){
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -467,7 +467,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fclose(tulis);
                 }
             }else{
-                if((tm.tm_mday + n) > 30){
+                if(a > 30){
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -528,7 +528,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
         }
     }else{
         if(tm.tm_mon == 2){
-            if((tm.tm_mday + n) > 28){
+            if(a > 28){
                 printf("==================================================\n");
                 printf("\n");
                 printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -587,7 +587,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
             }
         }else{
             if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
-                if((tm.tm_mday + n) > 31){
+                if(a > 31){
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
@@ -645,12 +645,13 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fclose(tulis);
                 }
             }else if(tm.tm_mon == 12){
-                if((tm.tm_mday + n) > 31){
+                if(a > 31){
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         printf("%c",tamu.nik[i]);
                     }
                     printf("\n");
@@ -667,6 +668,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "\n");
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
                     fprintf(tulis, "\n");
@@ -686,6 +688,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         printf("%c",tamu.nik[i]);
                     }
                     printf("\n");
@@ -703,6 +706,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     fprintf(tulis, "   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
                     fprintf(tulis, "\n");
@@ -718,12 +722,13 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fclose(tulis);
                 }
             }else{
-                if((tm.tm_mday + n) > 30){
+                if(a > 30){
                     printf("==================================================\n");
                     printf("\n");
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         printf("%c",tamu.nik[i]);
                     }
                     printf("\n");
@@ -741,6 +746,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     fprintf(tulis, "   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
                     fprintf(tulis, "\n");
@@ -760,6 +766,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     printf("   Nama Pemilik    : %s\n", nama_pengguna);
                     printf("   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         printf("%c",tamu.nik[i]);
                     }
                     printf("\n");
@@ -777,6 +784,7 @@ void struk(char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *
                     fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
                     fprintf(tulis, "   NIK (ID tamu)   : ");
                     for(int i = 0; i < 16; i++){
+                        if (i >= 16) continue;
                         fprintf(tulis, "%c",tamu.nik[i]);
                     }
                     fprintf(tulis, "\n");
@@ -803,6 +811,7 @@ void family_machine_night(struct Kamar tamu){
     char nik[16], nama_pengguna[1024];
     //n adalah lama menyewa;
     int nomor, n, harga, lama;
+    time_t waktu;
     system("cls");
     printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
     scanf("%[^\n]",nama_pengguna);
@@ -851,31 +860,31 @@ void family_machine_night(struct Kamar tamu){
                     case 301:
                         tulis = fopen("struk301.txt","w");
                         harga = n * KELUARGA_MALAM;
-                        struk(nama_pengguna, tamu, n, harga, tulis);
+                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
                         fclose(tulis);
                         break;
                     case 302:
                         tulis = fopen("struk302.txt","w");
                         harga = n * KELUARGA_MALAM;
-                        struk(nama_pengguna, tamu, n, harga, tulis);
+                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
                         fclose(tulis);
                         break;
                     case 303:
                         tulis = fopen("struk303.txt","w");
                         harga = n * KELUARGA_MALAM;
-                        struk(nama_pengguna, tamu, n, harga, tulis);
+                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
                         fclose(tulis);
                         break;
                     case 304:
                         tulis = fopen("struk304.txt","w");
                         harga = n * KELUARGA_MALAM;
-                        struk(nama_pengguna, tamu, n, harga, tulis);
+                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
                         fclose(tulis);
                         break;
                     case 305:
                         tulis = fopen("struk305.txt","w");
                         harga = n * KELUARGA_MALAM; 
-                        struk(nama_pengguna, tamu, n, harga, tulis);
+                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
                         fclose(tulis);
                         break;
                     default:
