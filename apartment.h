@@ -1242,7 +1242,10 @@ void batalkan_pesanan(){
             continue;
         }
         else{
-            fprintf(keluar,"%s,%d\n", tamu[i].nik, tamu[i].nomor);
+            for(int j = 0; j < 16; j++){
+                if(j >= 16) break;
+                else fprintf(keluar,"%c", tamu[i].nik[j]);
+            }fprintf(keluar, ",%d,%d\n", tamu[i].nomor, tamu[i].total);
         }
         i++;
     }while(!feof(masuk));
@@ -1342,6 +1345,6 @@ void ulang_ulang(){
     printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||   [0]    |     Tidak                 ||\n");
     printf("\t\t\t\t||   [1]    |     Iya                   ||\n");
-    printf("\t\t\t\t||===================================== ||\n");
-    printf("\t\t\t\t||Masukkan pilihan: ");
+    printf("\t\t\t\t|| ==================================== ||\n");
+    printf("\t\t\t\t|| Masukkan pilihan: ");
 }
