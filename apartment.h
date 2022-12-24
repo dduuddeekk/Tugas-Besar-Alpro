@@ -25,7 +25,7 @@ int validasi_angka(int range1, int range2){
 struct Kamar{
     char nik[16];
     int nomor;
-    int nomork[15];
+    int total;
 };
 int pilih;
 void menu(){
@@ -114,7 +114,7 @@ void check_apartment(){
     }else{
         while(!feof(masuk)){
             for(int i = 0; i < 15; i++){
-                fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &kamar[i]);
+                fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &kamar[i], &tamu[i].total);
             }
         }
         for(int i = 0; i < 15; i++){
@@ -272,7 +272,7 @@ void pengecekan_tempo(){ //jatuh tempo
         printf("\t\t\t\t Maaf data tamu tidak ada!\n");
     }else{
         do{
-            fscanf(cekdata, "%16[^,],%d\n", tamu.nik, &tamu.nomor);
+            fscanf(cekdata, "%16[^,],%d,%d\n", tamu.nik, &tamu.nomor, &tamu.total);
             if(strcmp(tamu.nik,nik)==1 && tamu.nomor == nomor){
                 printf("\t\t\t\t Data Terverifikasi.\n"); //no kamar belom terverif
                 tampilkan_tempo(nomor);
@@ -929,7 +929,7 @@ void sewa_keluarga_malam(struct Kamar tamu){
     FILE *datatamu;
     char nik[16], nama_pengguna[1024];
     //n adalah lama menyewa;
-    int nomor, n, harga, lama;
+    int nomor, n, lama, total;
     time_t waktu;
     system("cls");
     printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
@@ -971,40 +971,40 @@ void sewa_keluarga_malam(struct Kamar tamu){
         printf("\t\t\t\t Maaf program masih dalam pengembangan.\n");
     }else{
         while(!feof(cekdata)){
-            fscanf(cekdata, "%16[^,],%d\n", nik, &nomor);
-            if(strcmp(nik, tamu.nik) == 1 || nomor == tamu.nomor){
+            fscanf(cekdata, "%16[^,],%d,%d\n", nik, &nomor, &total);
+            if(strcmp(nik, tamu.nik) == 0 || nomor == tamu.nomor){
                 printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
                 break;
             }else{
                 switch(tamu.nomor){
                     case 301:
                         tulis = fopen("struk301.txt","w");
-                        harga = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
+                        tamu.total = n * KELUARGA_MALAM;
+                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 302:
                         tulis = fopen("struk302.txt","w");
-                        harga = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
+                        tamu.total = n * KELUARGA_MALAM;
+                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 303:
                         tulis = fopen("struk303.txt","w");
-                        harga = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
+                        tamu.total = n * KELUARGA_MALAM;
+                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 304:
                         tulis = fopen("struk304.txt","w");
-                        harga = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
+                        tamu.total = n * KELUARGA_MALAM;
+                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 305:
                         tulis = fopen("struk305.txt","w");
-                        harga = n * KELUARGA_MALAM; 
-                        struk(waktu, nama_pengguna, tamu, n, harga, tulis);
+                        tamu.total = n * KELUARGA_MALAM; 
+                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     default:
@@ -1018,7 +1018,7 @@ void sewa_keluarga_malam(struct Kamar tamu){
     for(int j = 0; j < 16; j++){
         if(j >= 16) break;
         else fprintf(datatamu, "%c", tamu.nik[j]);
-    }fprintf(datatamu, ",%d\n", tamu.nomor);
+    }fprintf(datatamu, ",%d,%d\n", tamu.nomor, tamu.total);
     fclose(datatamu);
 }
 //PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR KELUARGA 
@@ -1232,7 +1232,7 @@ void batalkan_pesanan(){
     fclose(riwayat);
     */
     do{
-        read = fscanf(masuk, "%99[^,],%d\n", tamu[i].nik, &tamu[i].nomor);
+        read = fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
         if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
             continue;
         }
