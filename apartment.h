@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <conio.h>
 #include <time.h>
+#include <stdbool.h>
 #define KELUARGA_MALAM 500000
 #define KELUARGA_BULAN 13500000
 #define KELUARGA_TAHUN 156000000
@@ -37,8 +38,9 @@ void menu(){
     printf("\t\t\t\t||   [1]    |   Pengecekan Apartemen    ||\n"); 
     printf("\t\t\t\t||   [2]    |   Pengecekan Jatuh Tempo  ||\n");
     printf("\t\t\t\t||   [3]    |   Penyewaan Apartemen     ||\n");
+    printf("\t\t\t\t||   [4]    |   Layanan Tambahan        ||\n");
     printf("\t\t\t\t||                                      ||\n");
-    printf("\t\t\t\t||                  [4]BATALKAN PESANAN ||\n");
+    printf("\t\t\t\t||                  [5]BATALKAN PESANAN ||\n");
     printf("\t\t\t\t||                  [0]KELUAR           ||\n");
     printf("\t\t\t\t||===================================== ||\n");
     printf("\t\t\t\t||Masukkan pilihan: ");
@@ -1057,6 +1059,14 @@ void fasilitas_keluarga(){
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    printf("\t\t\t\t|| ****************    List Kamar    **************** ||\n");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    printf("\t\t\t\t||  Kamar layanan Keluarga terdapat di Lantai Ketiga  ||\n");
+    printf("\t\t\t\t||   Dengan nomor kamar dimulai dari 301 sampai 305   ||\n");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    system("pause");
+    system("cls");
     int pilih;
 	printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||                                      ||\n");
@@ -1116,6 +1126,17 @@ void fasilitas_pribadi(){
     printf("\t\t\t\t|| ================================================== ||\n");
     system("pause");
     system("cls");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    printf("\t\t\t\t|| ****************    List Kamar    **************** ||\n");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    printf("\t\t\t\t||   Kamar layanan Pribadi terdapat di Lantai Kedua   ||\n");
+    printf("\t\t\t\t||   Dengan nomor kamar dimulai dari 201 sampai 205   ||\n");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    printf("\t\t\t\t||  Kamar layanan Pribadi terdapat di Lantai Pertama  ||\n");
+    printf("\t\t\t\t||   Dengan nomor kamar dimulai dari 101 sampai 105   ||\n");
+    printf("\t\t\t\t|| ================================================== ||\n");
+    system("pause");
+    system("cls");
     int pilih;
 	printf("\t\t\t\t|| ==================================== ||\n");
     printf("\t\t\t\t||                                      ||\n");
@@ -1167,34 +1188,168 @@ void paketan(){
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 }
-//PROSEDUR UNTUK TAMBAHAN LAYANAN YANG ADA DI APARTMENT 
-void tambahanlayanan (){ 
-    printf("\t\t\t\t|| ===================================================== ||\n");
-    printf("\t\t\t\t||                  LAYANAN TAMBAHAN                     ||\n");
-    printf("\t\t\t\t|| ===================================================== ||\n");
-    printf("\t\t\t\t||         L A Y A N A N         |       H A R G A       ||\n");
-    printf("\t\t\t\t|| ===================================================== ||\n");
-    printf("\t\t\t\t||   [1]  | Laundry              |  Rp. 8.000 /kg        ||\n");
-    printf("\t\t\t\t||   [2]  | Housekeeping         |  Rp. 5.000 /hari      ||\n");
-    printf("\t\t\t\t||   [3]  | Breakfast            |  Rp. 50.000 /porsi    ||\n");
-    printf("\t\t\t\t||   [4]  | Kembali ke menu awal                         ||\n");
-    printf("\t\t\t\t|| ===================================================== ||\n");
-}
-//TAMPILAN SELAMAT DATANG LAUNDRY 
-void laundry () {
+struct Laundry{
+    char nik[16];
+    char username[1024];
+    int nomor;
+};
+void laundry() {
+    system("cls");
+    struct Laundry layan;
+    struct Kamar tamu[15];
+    FILE *bersih, *periksa = fopen("datatamu.txt","r");
     printf("\t\t\t\t || ==================================================================== ||\n");
     printf("\t\t\t\t ||                         WELCOME TO APART LAUNDRY                     ||\n");
     printf("\t\t\t\t || ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ||\n");
     printf("\t\t\t\t ||                            I N F O R M A S I                         ||\n");
     printf("\t\t\t\t ||                              L A U N D R Y                           ||\n");
     printf("\t\t\t\t || ==================================================================== ||\n");
-    printf("\t\t\t\t || Laundry ini merupakan layanan tambahan yang ada di Dudek's Apartment ||\n");
-    printf("\t\t\t\t ||   customer dapat menggunakan layanan ini apabila sudah melakukan     ||\n");
+    printf("\t\t\t\t ||     Laundry ini merupakan layanan tambahan yang ada di Apartemen     ||\n");
+    printf("\t\t\t\t ||                            J U N E K A R T A                         ||\n");
+    printf("\t\t\t\t ||    Customer dapat menggunakan layanan ini apabila sudah melakukan    ||\n");
     printf("\t\t\t\t ||  registrasi di Apartment. Layanan laundry dihitung berdasarkan berat ||\n");
-    printf("\t\t\t\t ||        dari pakaian customer, setiap kg serharga Rp. 8.000,00.       ||\n");
+    printf("\t\t\t\t ||        dari pakaian customer, setiap kg serharga Rp. 7.999,00.       ||\n");
     printf("\t\t\t\t || ==================================================================== ||\n");
+    system("pause");
+    system("cls");
+    printf("\t\t\t\t || Masukkan NIK Anda               : ");
+    scanf("%[^\n]",layan.nik);
+    getchar();
+    for(int i = 0; i < 16; i++){
+        if(strlen(layan.nik) > 16){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            laundry();
+        }else if(strlen(layan.nik) < 16){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            laundry();
+        }else if((int)layan.nik[i] < '0' || (int)layan.nik[i] > '9'){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            laundry();
+        }
+    }
+    printf("\t\t\t\t || Masukkan nomor kamar Anda       : ");
+    layan.nomor = validasi_angka(101,305);
+    int n = strlen(layan.username);
+    printf("\t\t\t\t || Buat username yang Anda inginkan: ");
+    scanf("%[^\n]",layan.username);
+    getchar();
+    int i = 0;
+    while(!feof(periksa)){
+        fscanf(periksa, "%16[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
+        /*
+        if(strcmp(tamu[i].nik, layan.nik)!=0 || tamu[i].nomor != layan.nomor){
+            printf("\t\t\t\t Maaf kamu tidak bisa mendaftar.\n\t\t\t\t Kamu belum memesan apartemen.\n\t\t\t\t Silakan melakukan pemesanan terlebih dahulu!\n");
+            system("pause");
+        }*/
+        i++;
+    }
+    bool checker;
+    for(int i = 0; i < 15; i++){
+        if(strcmp(tamu[i].nik, layan.nik)==0 || tamu[i].nomor == layan.nomor){
+            checker = false;
+            break;
+        }
+        else{
+            checker = true;
+            break;
+        }
+    }
+    system("cls");
+    if(checker == false){
+        if(layan.nomor == 101) bersih = fopen("kartulaundry101.txt","w");
+        else if(layan.nomor == 102) bersih = fopen("kartulaundry102.txt","w");
+        else if(layan.nomor == 103) bersih = fopen("kartulaundry103.txt","w");
+        else if(layan.nomor == 104) bersih = fopen("kartulaundry104.txt","w");
+        else if(layan.nomor == 105) bersih = fopen("kartulaundry105.txt","w");
+        else if(layan.nomor == 201) bersih = fopen("kartulaundry201.txt","w");
+        else if(layan.nomor == 202) bersih = fopen("kartulaundry202.txt","w");
+        else if(layan.nomor == 203) bersih = fopen("kartulaundry203.txt","w");
+        else if(layan.nomor == 204) bersih = fopen("kartulaundry204.txt","w");
+        else if(layan.nomor == 205) bersih = fopen("kartulaundry205.txt","w");
+        else if(layan.nomor == 301) bersih = fopen("kartulaundry301.txt","w");
+        else if(layan.nomor == 302) bersih = fopen("kartulaundry302.txt","w");
+        else if(layan.nomor == 303) bersih = fopen("kartulaundry303.txt","w");
+        else if(layan.nomor == 304) bersih = fopen("kartulaundry304.txt","w");
+        else bersih = fopen("kartulaundry305.txt","w");
+        printf("====================================================================\n");
+        printf("                         KARTU LAUNDRY\n");
+        printf(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n");
+        printf("\n");
+        printf("   Username    : ");
+        for(int i = 0; i < n; i++){
+            if(layan.username[i] == '\0') break;
+            else printf("%c", layan.username[i]);
+        }printf("\n");
+        printf("   NIK         : ");
+        for(int i = 0; i < 16; i++){
+            if(i >= 16) break;
+            else printf("%c",layan.nik[i]);
+        }printf("\n");
+        printf("   Nomor Kamar : %d\n", layan.nomor);
+        printf("\n");
+        printf(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n");
+        printf("\n");
+        printf("====================================================================\n");
+        fprintf(bersih, "====================================================================\n");
+        fprintf(bersih, "                         KARTU LAUNDRY\n");
+        fprintf(bersih, ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n");
+        fprintf(bersih, "\n");
+        fprintf(bersih, "   Username    : ");
+        for(int i = 0; i < n; i++){
+            if(layan.username[i] == '\0') break;
+            else fprintf(bersih, "%c", layan.username[i]);
+        }fprintf(bersih, "\n");
+        fprintf(bersih, "   NIK         : ");
+        for(int i = 0; i < 16; i++){
+            if(i >= 16) break;
+            else fprintf(bersih, "%c",layan.nik[i]);
+        }fprintf(bersih, "\n");
+        fprintf(bersih, "   Nomor Kamar : %d\n", layan.nomor);
+        fprintf(bersih, "\n");
+        fprintf(bersih, ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n");
+        fprintf(bersih, "\n");
+        fprintf(bersih, "====================================================================\n");
+        fclose(bersih);
+        system("pause");
+        system("cls");
+    }else{
+        printf("\t\t\t\t Maaf kamu tidak bisa mendaftar.\n\t\t\t\t Kamu belum memesan apartemen.\n\t\t\t\t Silakan melakukan pemesanan terlebih dahulu!\n");
+        system("pause");
+    }
+    fclose(periksa);
 }
-
+//PROSEDUR UNTUK TAMBAHAN LAYANAN YANG ADA DI APARTMENT 
+void tambahanlayanan(){
+    system("cls"); 
+    printf("\t\t\t\t|| ===================================================== ||\n");
+    printf("\t\t\t\t||                  LAYANAN TAMBAHAN                     ||\n");
+    printf("\t\t\t\t|| ===================================================== ||\n");
+    printf("\t\t\t\t||         L A Y A N A N         |       H A R G A       ||\n");
+    printf("\t\t\t\t|| ===================================================== ||\n");
+    printf("\t\t\t\t||   [1]  | Laundry              |  Rp. 7.999 /kg        ||\n");
+    printf("\t\t\t\t||   [2]  | Housekeeping         |  Rp. 5.000 /hari      ||\n");
+    printf("\t\t\t\t||   [3]  | Breakfast            |  Rp. 50.000 /porsi    ||\n");
+    printf("\t\t\t\t||   [0]  | Kembali ke menu awal                         ||\n");
+    printf("\t\t\t\t|| ===================================================== ||\n");
+    int tambah;
+    printf("\t\t\t\t|| Masukkan pilihan: ");
+    tambah = validasi_angka(0, 3);
+    switch(tambah){
+        case 1:
+            laundry();
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            printf("\t\t\t\t Terima kasih karena telah menggunakan layanan kami.\n");
+    }
+}
+//TAMPILAN SELAMAT DATANG LAUNDRY 
 // PROSEDUR BATALKAN PESANAN
 void batalkan_pesanan(){
     struct Kamar tamu[15], kamar;
@@ -1307,7 +1462,7 @@ void mainmenu(){
     int ulang;
     do{
         menu();
-        pilih = validasi_angka(0, 4);
+        pilih = validasi_angka(0, 5);
         switch(pilih){
             case 1:
                 check_apartment();
@@ -1322,6 +1477,11 @@ void mainmenu(){
                 system("pause");
                 break;
             case 4:
+                tambahanlayanan();
+                system("cls");
+                system("pause");
+                break;
+            case 5:
                 batalkan_pesanan();
                 break;
             default:
