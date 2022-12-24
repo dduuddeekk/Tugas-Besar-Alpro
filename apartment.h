@@ -129,10 +129,13 @@ void check_apartment(){
             }
         }
         //jadi, kamar diurutkan dari nomor yang terbesar.
+        system("cls");
         printf("\t\t\t\t Kamar yang sudah dipesan: \n");
         for(int i = 0; i < 15; i++){
-            if(kamar[i] == 0) printf("\0");
-            else printf("\t\t\t\t %d. %d\n",i+1,kamar[i]);
+            if(kamar[i] >= 101 && kamar[i] <= 105) printf("\t\t\t\t %d\n",kamar[i]);
+            else if(kamar[i] >= 201 && kamar[i] <= 205) printf("\t\t\t\t %d\n",kamar[i]);
+            else if(kamar[i] >= 301 && kamar[i] <= 305) printf("\t\t\t\t %d\n",kamar[i]);
+            else printf("\0");
         }
         fclose(masuk);
     }
@@ -1232,10 +1235,10 @@ void laundry() {
     }
     printf("\t\t\t\t || Masukkan nomor kamar Anda       : ");
     layan.nomor = validasi_angka(101,305);
-    int n = strlen(layan.username);
     printf("\t\t\t\t || Buat username yang Anda inginkan: ");
     scanf("%[^\n]",layan.username);
     getchar();
+    int n = strlen(layan.username);
     int i = 0;
     while(!feof(periksa)){
         fscanf(periksa, "%16[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
@@ -1280,8 +1283,8 @@ void laundry() {
         printf("\n");
         printf("   Username    : ");
         for(int i = 0; i < n; i++){
+            printf("%c", layan.username[i]);
             if(layan.username[i] == '\0') break;
-            else printf("%c", layan.username[i]);
         }printf("\n");
         printf("   NIK         : ");
         for(int i = 0; i < 16; i++){
@@ -1299,8 +1302,8 @@ void laundry() {
         fprintf(bersih, "\n");
         fprintf(bersih, "   Username    : ");
         for(int i = 0; i < n; i++){
+            fprintf(bersih, "%c", layan.username[i]);
             if(layan.username[i] == '\0') break;
-            else fprintf(bersih, "%c", layan.username[i]);
         }fprintf(bersih, "\n");
         fprintf(bersih, "   NIK         : ");
         for(int i = 0; i < 16; i++){
@@ -1386,77 +1389,103 @@ void batalkan_pesanan(){
     }while(!feof(masuk));
     fclose(riwayat);
     */
-    do{
-        read = fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
-        if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
-            system("cls");
-            printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
-            printf("|| Total Pembayaran   : %d\n", tamu[i].total);
-            printf("|| Pengembalian       : %.0lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
-            system("pause");
-            continue;
+    if(masuk == NULL){
+        system("cls");
+        printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n");
+    }else{
+        do{
+            read = fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
+            if(tamu[i].nik == NULL || tamu[i].nomor < 101 && tamu[i].nomor > 305 || tamu[i].total < 350000){
+                system("cls");
+                printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n");
+                system("pause");
+            }
+            else if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
+                system("cls");
+                printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
+                printf("|| Total Pembayaran   : %d\n", tamu[i].total);
+                printf("|| Pengembalian       : %.0lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
+                system("pause");
+                continue;
+            }
+            else{
+                for(int j = 0; j < 16; j++){
+                    if(j >= 16) break;
+                    else fprintf(keluar,"%c", tamu[i].nik[j]);
+                }fprintf(keluar, ",%d,%d\n", tamu[i].nomor, tamu[i].total);
+            }
+            i++;
+        }while(!feof(masuk));
+        fclose(keluar);
+        fclose(masuk);
+        remove("datatamu.txt");
+        rename("backup.txt", "datatamu.txt");
+        switch(kamar.nomor){
+            case 101:
+                remove("struk101.txt");
+                remove("kartulaundry101.txt");
+                break;
+            case 102:
+                remove("struk102.txt");
+                remove("kartulaundry102.txt");
+                break;
+            case 103:
+                remove("struk103.txt");
+                remove("kartulaundry103.txt");
+                break;
+            case 104:
+                remove("struk104.txt");
+                remove("kartulaundry104.txt");
+                break;
+            case 105:
+                remove("struk105.txt");
+                remove("kartulaundry105.txt");
+                break;
+            case 201:
+                remove("struk201.txt");
+                remove("kartulaundry201.txt");
+                break;
+            case 202:
+                remove("struk202.txt");
+                remove("kartulaundry202.txt");
+                break;
+            case 203:
+                remove("struk203.txt");
+                remove("kartulaundry203.txt");
+                break;
+            case 204:
+                remove("struk204.txt");
+                remove("kartulaundry204.txt");
+                break;
+            case 205:
+                remove("struk205.txt");
+                remove("kartulaundry205.txt");
+                break;
+            case 301:
+                remove("struk301.txt");
+                remove("kartulaundry301.txt");
+                break;
+            case 302:
+                remove("struk302.txt");
+                remove("kartulaundry302.txt");
+                break;
+            case 303:
+                remove("struk303.txt");
+                remove("kartulaundry303.txt");
+                break;
+            case 304:
+                remove("struk304.txt");
+                remove("kartulaundry304.txt");
+                break;
+            case 305:
+                remove("struk305.txt");
+                remove("kartulaundry305.txt");
+                break;
+            default:
+                printf("Dadaaaa ....");
         }
-        else{
-            for(int j = 0; j < 16; j++){
-                if(j >= 16) break;
-                else fprintf(keluar,"%c", tamu[i].nik[j]);
-            }fprintf(keluar, ",%d,%d\n", tamu[i].nomor, tamu[i].total);
-        }
-        i++;
-    }while(!feof(masuk));
-    fclose(keluar);
-    fclose(masuk);
-    remove("datatamu.txt");
-    rename("backup.txt", "datatamu.txt");
-    switch(kamar.nomor){
-        case 101:
-            remove("struk101.txt");
-            break;
-        case 102:
-            remove("struk102.txt");
-            break;
-        case 103:
-            remove("struk103.txt");
-            break;
-        case 104:
-            remove("struk104.txt");
-            break;
-        case 105:
-            remove("struk105.txt");
-            break;
-        case 201:
-            remove("struk201.txt");
-            break;
-        case 202:
-            remove("struk202.txt");
-            break;
-        case 203:
-            remove("struk203.txt");
-            break;
-        case 204:
-            remove("struk204.txt");
-            break;
-        case 205:
-            remove("struk205.txt");
-            break;
-        case 301:
-            remove("struk301.txt");
-            break;
-        case 302:
-            remove("struk302.txt");
-            break;
-        case 303:
-            remove("struk303.txt");
-            break;
-        case 304:
-            remove("struk304.txt");
-            break;
-        default:
-            remove("struk305.txt");
-            break;
     }
 }
-
 void ulang_ulang();
 void mainmenu(){
     int ulang;
