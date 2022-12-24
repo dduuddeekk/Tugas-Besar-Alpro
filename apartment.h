@@ -1234,6 +1234,11 @@ void batalkan_pesanan(){
     do{
         read = fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
         if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
+            system("cls");
+            printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
+            printf("|| Total Pembayaran   : %d\n", tamu[i].total);
+            printf("|| Pengembalian       : %.2lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
+            system("pause");
             continue;
         }
         else{
