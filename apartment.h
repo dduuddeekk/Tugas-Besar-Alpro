@@ -27,6 +27,8 @@ struct Kamar{
     char nik[16];
     int nomor;
     int total;
+    char masuk[11];
+    char keluar[11];
 };
 int pilih;
 void menu(){
@@ -116,7 +118,7 @@ void check_apartment(){
     }else{
         while(!feof(masuk)){
             for(int i = 0; i < 15; i++){
-                fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &kamar[i], &tamu[i].total);
+                fscanf(masuk, "%99[^,],%d,%d,%11[^,],%11[^,]\n", tamu[i].nik, &kamar[i], &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
             }
         }
         for(int i = 0; i < 15; i++){
@@ -277,7 +279,7 @@ void pengecekan_tempo(){ //jatuh tempo
         printf("\t\t\t\t Maaf data tamu tidak ada!\n");
     }else{
         do{
-            fscanf(cekdata, "%16[^,],%d,%d\n", tamu.nik, &tamu.nomor, &tamu.total);
+            fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", tamu.nik, &tamu.nomor, &tamu.total, tamu.masuk, tamu.keluar);
             if(strcmp(tamu.nik,nik)==1 && tamu.nomor == nomor){
                 printf("\t\t\t\t Data Terverifikasi.\n"); //no kamar belom terverif
                 tampilkan_tempo(nomor);
@@ -291,7 +293,7 @@ void pengecekan_tempo(){ //jatuh tempo
     }
     fclose(cekdata);
 }
-void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis){
+void struk_malam(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis){
     waktu = time(NULL);
     struct tm tm = *localtime(&waktu);
     tm.tm_year = tm.tm_year + 1900;
@@ -314,8 +316,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -332,8 +334,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -352,8 +354,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -370,8 +372,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -392,8 +394,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-29, tm.tm_mon+1, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-29, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -410,8 +412,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-29, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-29, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -430,8 +432,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -448,8 +450,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -470,8 +472,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -488,8 +490,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -508,8 +510,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -526,8 +528,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -548,8 +550,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -566,8 +568,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -586,8 +588,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -604,8 +606,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -628,8 +630,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -646,8 +648,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, (tm.tm_mon+1)-12, tm.tm_year+1);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -666,8 +668,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -684,8 +686,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -706,8 +708,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-28, tm.tm_mon+1, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-28, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -724,8 +726,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-28, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-28, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -744,8 +746,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -762,8 +764,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -784,8 +786,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -802,8 +804,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-31, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -822,8 +824,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -840,8 +842,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -862,8 +864,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -880,8 +882,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",(tm.tm_mday+n)-30, tm.tm_mon+1, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -900,8 +902,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 printf("\n");
                 printf("==================================================\n");
                 printf("\n");
-                printf("   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                printf("   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                printf("   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 printf("\n");
                 printf("==================================================\n");
                 fprintf(tulis, "==================================================\n");
@@ -918,8 +920,8 @@ void struk(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fprintf(tulis, "\n");
-                fprintf(tulis, "   Tanggal Memesan : %d/%d/%d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
-                fprintf(tulis, "   Jatuh Tempo     : %d/%d/%d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n",tm.tm_mday+n, tm.tm_mon, tm.tm_year);
                 fprintf(tulis, "\n");
                 fprintf(tulis, "==================================================\n");
                 fclose(tulis);
@@ -935,7 +937,11 @@ void sewa_keluarga_malam(struct Kamar tamu){
     char nik[16], nama_pengguna[1024];
     //n adalah lama menyewa;
     int nomor, n, lama, total;
-    time_t waktu;
+    time_t waktu, tanggal;
+    tanggal = time(NULL);
+    struct tm tm = *localtime(&tanggal);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
     system("cls");
     printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
     scanf("%[^\n]",nama_pengguna);
@@ -972,11 +978,12 @@ void sewa_keluarga_malam(struct Kamar tamu){
     printf("\t\t\t\t||Berapa malam Anda hendak menyewa: ");
     n = validasi_angka(0, 29);
     system("cls");
+    int a = tm.tm_mday + n;
     if(cekdata == NULL){
         printf("\t\t\t\t Maaf program masih dalam pengembangan.\n");
     }else{
         while(!feof(cekdata)){
-            fscanf(cekdata, "%16[^,],%d,%d\n", nik, &nomor, &total);
+            fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", nik, &nomor, &total, tamu.masuk, tamu.keluar);
             if(strcmp(nik, tamu.nik) == 0 || nomor == tamu.nomor){
                 printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
                 break;
@@ -985,31 +992,31 @@ void sewa_keluarga_malam(struct Kamar tamu){
                     case 301:
                         tulis = fopen("struk301.txt","w");
                         tamu.total = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+                        struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 302:
                         tulis = fopen("struk302.txt","w");
                         tamu.total = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+                        struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 303:
                         tulis = fopen("struk303.txt","w");
                         tamu.total = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+                        struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 304:
                         tulis = fopen("struk304.txt","w");
                         tamu.total = n * KELUARGA_MALAM;
-                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+                        struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     case 305:
                         tulis = fopen("struk305.txt","w");
                         tamu.total = n * KELUARGA_MALAM; 
-                        struk(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+                        struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
                         fclose(tulis);
                         break;
                     default:
@@ -1023,7 +1030,76 @@ void sewa_keluarga_malam(struct Kamar tamu){
     for(int j = 0; j < 16; j++){
         if(j >= 16) break;
         else fprintf(datatamu, "%c", tamu.nik[j]);
-    }fprintf(datatamu, ",%d,%d\n", tamu.nomor, tamu.total);
+    }fprintf(datatamu, ",%d,%d", tamu.nomor, tamu.total);
+    if(tm.tm_year % 4 == 0){
+        if(tm.tm_mon == 12){
+            if(a > 31){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,(tm.tm_mon+1)-12,tm.tm_year+1);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }else if(tm.tm_mon == 2){
+            if(a > 29){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-29,tm.tm_mon+1,tm.tm_year);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+            if(a > 31){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,tm.tm_mon+1,tm.tm_year);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }else{
+            if(a > 30){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-30,tm.tm_mon+1,tm.tm_year);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }
+    }else{
+        if(tm.tm_mon == 12){
+            if(a > 31){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,(tm.tm_mon+1)-12,tm.tm_year+1);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }else if(tm.tm_mon == 2){
+            if(a > 28){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-28,tm.tm_mon+1,tm.tm_year);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+            if(a > 31){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,tm.tm_mon+1,tm.tm_year);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }else{
+            if(a > 30){
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-30,tm.tm_mon+1,tm.tm_year);
+            }else{
+                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+            }
+        }
+    }
     fclose(datatamu);
 }
 //PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR KELUARGA 
@@ -1241,7 +1317,7 @@ void laundry() {
     int n = strlen(layan.username);
     int i = 0;
     while(!feof(periksa)){
-        fscanf(periksa, "%16[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
+        fscanf(periksa, "%16[^,],%d,%d,%11[^,],%11[^,]\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
         /*
         if(strcmp(tamu[i].nik, layan.nik)!=0 || tamu[i].nomor != layan.nomor){
             printf("\t\t\t\t Maaf kamu tidak bisa mendaftar.\n\t\t\t\t Kamu belum memesan apartemen.\n\t\t\t\t Silakan melakukan pemesanan terlebih dahulu!\n");
@@ -1389,100 +1465,138 @@ void batalkan_pesanan(){
     }while(!feof(masuk));
     fclose(riwayat);
     */
+    bool checker, periksa = true;
     if(masuk == NULL){
         system("cls");
         printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n");
     }else{
         do{
-            read = fscanf(masuk, "%99[^,],%d,%d\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total);
+            read = fscanf(masuk, "%99[^,],%d,%d,%11[^,],%11[^,]\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
             if(tamu[i].nik == NULL || tamu[i].nomor < 101 && tamu[i].nomor > 305 || tamu[i].total < 350000){
                 system("cls");
-                printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n");
+                printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n\t\t\t\t Atau nomor kamar dan NIK tidak sesuai.\n");
                 system("pause");
+                checker = true;
             }
-            else if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
+            else if(kamar.nomor == tamu[i].nomor){
+                if(strcmp(kamar.nik, tamu[i].nik)==1){
+                    system("cls");
+                    printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n\t\t\t\t Atau nomor kamar dan NIK tidak sesuai.\n");
+                    system("pause");
+                    checker = true;
+                }
+            }
+            /*
+            else if(strcmp(tamu[i].nik,kamar.nik)==0 && kamar.nomor != tamu[i].nomor){
                 system("cls");
-                printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
-                printf("|| Total Pembayaran   : %d\n", tamu[i].total);
-                printf("|| Pengembalian       : %.0lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
+                printf("\t\t\t\t NIK dan nomor kamar tidak sesuai.\n");
                 system("pause");
-                continue;
-            }
-            else{
-                for(int j = 0; j < 16; j++){
-                    if(j >= 16) break;
-                    else fprintf(keluar,"%c", tamu[i].nik[j]);
-                }fprintf(keluar, ",%d,%d\n", tamu[i].nomor, tamu[i].total);
+            }*/
+            if(checker == false){
+                if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
+                    system("cls");
+                    printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
+                    printf("|| Total Pembayaran   : %d\n", tamu[i].total);
+                    printf("|| Pengembalian       : %.0lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
+                    system("pause");
+                    continue;
+                }
+                else{
+                    for(int j = 0; j < 16; j++){
+                        if(j >= 16) break;
+                        else if(tamu[i].nik[j] == 0) break;
+                        else fprintf(keluar,"%c", tamu[i].nik[j]);
+                    }fprintf(keluar, ",%d,%d,", tamu[i].nomor, tamu[i].total);
+                    for(int j = 0; j < 16; j++){
+                        if(j >= 11) break;
+                        else if(tamu[i].masuk[j] == 0) break;
+                        else fprintf(keluar, "%c", tamu[i].masuk[j]);
+                    }fprintf(keluar, ",");
+                    for(int j = 0; j < 16; j++){
+                        if(j >= 11) break;
+                        else if(tamu[i].keluar[j] == 0) break;
+                        else fprintf(keluar, "%c", tamu[i].keluar[j]);
+                    }fprintf(keluar, "\n");
+                }
+                periksa = false;
+            }else if(checker == true){
+                periksa = true;
             }
             i++;
         }while(!feof(masuk));
         fclose(keluar);
         fclose(masuk);
-        remove("datatamu.txt");
-        rename("backup.txt", "datatamu.txt");
-        switch(kamar.nomor){
-            case 101:
-                remove("struk101.txt");
-                remove("kartulaundry101.txt");
-                break;
-            case 102:
-                remove("struk102.txt");
-                remove("kartulaundry102.txt");
-                break;
-            case 103:
-                remove("struk103.txt");
-                remove("kartulaundry103.txt");
-                break;
-            case 104:
-                remove("struk104.txt");
-                remove("kartulaundry104.txt");
-                break;
-            case 105:
-                remove("struk105.txt");
-                remove("kartulaundry105.txt");
-                break;
-            case 201:
-                remove("struk201.txt");
-                remove("kartulaundry201.txt");
-                break;
-            case 202:
-                remove("struk202.txt");
-                remove("kartulaundry202.txt");
-                break;
-            case 203:
-                remove("struk203.txt");
-                remove("kartulaundry203.txt");
-                break;
-            case 204:
-                remove("struk204.txt");
-                remove("kartulaundry204.txt");
-                break;
-            case 205:
-                remove("struk205.txt");
-                remove("kartulaundry205.txt");
-                break;
-            case 301:
-                remove("struk301.txt");
-                remove("kartulaundry301.txt");
-                break;
-            case 302:
-                remove("struk302.txt");
-                remove("kartulaundry302.txt");
-                break;
-            case 303:
-                remove("struk303.txt");
-                remove("kartulaundry303.txt");
-                break;
-            case 304:
-                remove("struk304.txt");
-                remove("kartulaundry304.txt");
-                break;
-            case 305:
-                remove("struk305.txt");
-                remove("kartulaundry305.txt");
-                break;
-            default:
-                printf("Dadaaaa ....");
+        if(periksa == true){
+            system("cls");
+            printf("\t\t\t\t Terima kasih.\n");
+            system("pause");
+        }else{
+            remove("datatamu.txt");
+            rename("backup.txt", "datatamu.txt");
+            switch(kamar.nomor){
+                case 101:
+                    remove("struk101.txt");
+                    remove("kartulaundry101.txt");
+                    break;
+                case 102:
+                    remove("struk102.txt");
+                    remove("kartulaundry102.txt");
+                    break;
+                case 103:
+                    remove("struk103.txt");
+                    remove("kartulaundry103.txt");
+                    break;
+                case 104:
+                    remove("struk104.txt");
+                    remove("kartulaundry104.txt");
+                    break;
+                case 105:
+                    remove("struk105.txt");
+                    remove("kartulaundry105.txt");
+                    break;
+                case 201:
+                    remove("struk201.txt");
+                    remove("kartulaundry201.txt");
+                    break;
+                case 202:
+                    remove("struk202.txt");
+                    remove("kartulaundry202.txt");
+                    break;
+                case 203:
+                    remove("struk203.txt");
+                    remove("kartulaundry203.txt");
+                    break;
+                case 204:
+                    remove("struk204.txt");
+                    remove("kartulaundry204.txt");
+                    break;
+                case 205:
+                    remove("struk205.txt");
+                    remove("kartulaundry205.txt");
+                    break;
+                case 301:
+                    remove("struk301.txt");
+                    remove("kartulaundry301.txt");
+                    break;
+                case 302:
+                    remove("struk302.txt");
+                    remove("kartulaundry302.txt");
+                    break;
+                case 303:
+                    remove("struk303.txt");
+                    remove("kartulaundry303.txt");
+                    break;
+                case 304:
+                    remove("struk304.txt");
+                    remove("kartulaundry304.txt");
+                    break;
+                case 305:
+                    remove("struk305.txt");
+                    remove("kartulaundry305.txt");
+                    break;
+                default:
+                    printf("Dadaaaa ....");
+            }
         }
     }
 }
