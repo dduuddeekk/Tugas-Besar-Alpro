@@ -1171,18 +1171,18 @@ void paketan(){
 void tambahanlayanan (){ 
     printf("\t\t\t\t|| ===================================================== ||\n");
     printf("\t\t\t\t||                  LAYANAN TAMBAHAN                     ||\n");
-    printf("\t\t\t\t|| ======================================================||\n");
+    printf("\t\t\t\t|| ===================================================== ||\n");
     printf("\t\t\t\t||         L A Y A N A N         |       H A R G A       ||\n");
     printf("\t\t\t\t|| ===================================================== ||\n");
     printf("\t\t\t\t||   [1]  | Laundry              |  Rp. 8.000 /kg        ||\n");
     printf("\t\t\t\t||   [2]  | Housekeeping         |  Rp. 5.000 /hari      ||\n");
     printf("\t\t\t\t||   [3]  | Breakfast            |  Rp. 50.000 /porsi    ||\n");
-    printf("\t\t\t\t||   [5]  | Kembali ke menu awal                         ||\n");
+    printf("\t\t\t\t||   [4]  | Kembali ke menu awal                         ||\n");
     printf("\t\t\t\t|| ===================================================== ||\n");
 }
 //TAMPILAN SELAMAT DATANG LAUNDRY 
 void laundry () {
-    printf("\t\t\t\t ==========================================================================\n");
+    printf("\t\t\t\t || ==================================================================== ||\n");
     printf("\t\t\t\t ||                         WELCOME TO APART LAUNDRY                     ||\n");
     printf("\t\t\t\t || ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ||\n");
     printf("\t\t\t\t ||                            I N F O R M A S I                         ||\n");
@@ -1237,7 +1237,7 @@ void batalkan_pesanan(){
             system("cls");
             printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
             printf("|| Total Pembayaran   : %d\n", tamu[i].total);
-            printf("|| Pengembalian       : %.2lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
+            printf("|| Pengembalian       : %.0lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
             system("pause");
             continue;
         }
