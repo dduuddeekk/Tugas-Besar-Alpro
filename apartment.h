@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <time.h>
 #include <stdbool.h>
+#include <unistd.h>
 #define KELUARGA_MALAM 500000
 #define KELUARGA_BULAN 13500000
 #define KELUARGA_TAHUN 156000000
@@ -979,15 +980,24 @@ void sewa_keluarga_malam(struct Kamar tamu){
     n = validasi_angka(0, 29);
     system("cls");
     int a = tm.tm_mday + n;
+    int i = 0;
     if(cekdata == NULL){
-        printf("\t\t\t\t Maaf program masih dalam pengembangan.\n");
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
     }else{
         while(!feof(cekdata)){
             fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", nik, &nomor, &total, tamu.masuk, tamu.keluar);
-            if(strcmp(nik, tamu.nik) == 0 || nomor == tamu.nomor){
-                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+            if(strcmp(nik, tamu.nik) == 0){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
                 break;
             }else{
+                continue;
+            }
+            if(nomor == tamu.nomor){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                break;
+            }else if(strcmp(nik, tamu.nik)!=0 && nomor != tamu.nomor){
                 switch(tamu.nomor){
                     case 301:
                         tulis = fopen("struk301.txt","w");
@@ -1022,85 +1032,89 @@ void sewa_keluarga_malam(struct Kamar tamu){
                     default:
                         printf("Dadaaaaa....");
                 }
+                datatamu = fopen("datatamu.txt","a");
+                for(int j = 0; j < 16; j++){
+                    if(j >= 16) break;
+                    else fprintf(datatamu, "%c", tamu.nik[j]);
+                }fprintf(datatamu, ",%d,%d", tamu.nomor, tamu.total);
+                if(tm.tm_year % 4 == 0){
+                    if(tm.tm_mon == 12){
+                        if(a > 31){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,(tm.tm_mon+1)-12,tm.tm_year+1);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }else if(tm.tm_mon == 2){
+                        if(a > 29){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-29,tm.tm_mon+1,tm.tm_year);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+                        if(a > 31){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,tm.tm_mon+1,tm.tm_year);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }else{
+                        if(a > 30){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-30,tm.tm_mon+1,tm.tm_year);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }
+                }else{
+                    if(tm.tm_mon == 12){
+                        if(a > 31){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,(tm.tm_mon+1)-12,tm.tm_year+1);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }else if(tm.tm_mon == 2){
+                        if(a > 28){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-28,tm.tm_mon+1,tm.tm_year);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
+                        if(a > 31){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,tm.tm_mon+1,tm.tm_year);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }else{
+                        if(a > 30){
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-30,tm.tm_mon+1,tm.tm_year);
+                        }else{
+                            fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
+                            fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
+                        }
+                    }
+                }
+                fclose(datatamu);
+            }else{
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                break;
             }
         }
     }
     fclose(cekdata);
-    datatamu = fopen("datatamu.txt","a");
-    for(int j = 0; j < 16; j++){
-        if(j >= 16) break;
-        else fprintf(datatamu, "%c", tamu.nik[j]);
-    }fprintf(datatamu, ",%d,%d", tamu.nomor, tamu.total);
-    if(tm.tm_year % 4 == 0){
-        if(tm.tm_mon == 12){
-            if(a > 31){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,(tm.tm_mon+1)-12,tm.tm_year+1);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }else if(tm.tm_mon == 2){
-            if(a > 29){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-29,tm.tm_mon+1,tm.tm_year);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
-            if(a > 31){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,tm.tm_mon+1,tm.tm_year);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }else{
-            if(a > 30){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-30,tm.tm_mon+1,tm.tm_year);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }
-    }else{
-        if(tm.tm_mon == 12){
-            if(a > 31){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,(tm.tm_mon+1)-12,tm.tm_year+1);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }else if(tm.tm_mon == 2){
-            if(a > 28){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-28,tm.tm_mon+1,tm.tm_year);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }else if(tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10){
-            if(a > 31){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-31,tm.tm_mon+1,tm.tm_year);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }else{
-            if(a > 30){
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",(tm.tm_mday+n)-30,tm.tm_mon+1,tm.tm_year);
-            }else{
-                fprintf(datatamu, ",%02d/%02d/%04d,",tm.tm_mday,tm.tm_mon,tm.tm_year);
-                fprintf(datatamu, "%02d/%02d/%04d\n",tm.tm_mday+n,tm.tm_mon,tm.tm_year);
-            }
-        }
-    }
-    fclose(datatamu);
 }
 //PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR KELUARGA 
 void fasilitas_keluarga(){
@@ -1476,15 +1490,42 @@ void batalkan_pesanan(){
                 system("cls");
                 printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n\t\t\t\t Atau nomor kamar dan NIK tidak sesuai.\n");
                 system("pause");
-                checker = true;
+                break;
             }
-            else if(kamar.nomor == tamu[i].nomor){
-                if(strcmp(kamar.nik, tamu[i].nik)==1){
+            else if(strcmp(tamu[i].nik, kamar.nik)==0){
+                if(kamar.nomor != tamu[i].nomor){
                     system("cls");
                     printf("\t\t\t\t Tidak ada NIK atau ID tamu alias belum memesan apartemen.\n\t\t\t\t Atau nomor kamar dan NIK tidak sesuai.\n");
                     system("pause");
-                    checker = true;
+                    break;
+                }else{
+                    if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
+                        system("cls");
+                        printf("\t\t\t\t Pengembalian Dana Hanya Sebesar 49%%!\n");
+                        printf("|| Total Pembayaran   : %d\n", tamu[i].total);
+                        printf("|| Pengembalian       : %.0lf\n", (double)(tamu[i].total - (0.51*tamu[i].total)));
+                        system("pause");
+                        continue;
+                    }else{
+                        for(int j = 0; j < 16; j++){
+                            if(j >= 16) break;
+                            else if(tamu[i].nik[j] == 0) break;
+                            else fprintf(keluar,"%c", tamu[i].nik[j]);
+                        }fprintf(keluar, ",%d,%d,", tamu[i].nomor, tamu[i].total);
+                        for(int j = 0; j < 16; j++){
+                            if(j >= 11) break;
+                            else if(tamu[i].masuk[j] == 0) break;
+                            else fprintf(keluar, "%c", tamu[i].masuk[j]);
+                        }fprintf(keluar, ",");
+                        for(int j = 0; j < 16; j++){
+                            if(j >= 11) break;
+                            else if(tamu[i].keluar[j] == 0) break;
+                            else fprintf(keluar, "%c", tamu[i].keluar[j]);
+                        }fprintf(keluar, "\n");
+                    }
                 }
+            }else{
+                printf("\t\t\t\t Terima kasih.\n");
             }
             /*
             else if(strcmp(tamu[i].nik,kamar.nik)==0 && kamar.nomor != tamu[i].nomor){
@@ -1492,6 +1533,7 @@ void batalkan_pesanan(){
                 printf("\t\t\t\t NIK dan nomor kamar tidak sesuai.\n");
                 system("pause");
             }*/
+            /*
             if(checker == false){
                 if(strcmp(tamu[i].nik,kamar.nik)==0 && tamu[i].nomor == kamar.nomor){
                     system("cls");
@@ -1520,17 +1562,13 @@ void batalkan_pesanan(){
                 }
                 periksa = false;
             }else if(checker == true){
+                kamar.nomor = 0;
                 periksa = true;
-            }
+            }*/
             i++;
         }while(!feof(masuk));
         fclose(keluar);
         fclose(masuk);
-        if(periksa == true){
-            system("cls");
-            printf("\t\t\t\t Terima kasih.\n");
-            system("pause");
-        }else{
             remove("datatamu.txt");
             rename("backup.txt", "datatamu.txt");
             switch(kamar.nomor){
@@ -1595,13 +1633,15 @@ void batalkan_pesanan(){
                     remove("kartulaundry305.txt");
                     break;
                 default:
-                    printf("Dadaaaa ....");
+                    printf("\t\t\t\t Terima kasih.\n");
             }
-        }
     }
 }
 void ulang_ulang();
 void mainmenu(){
+    FILE *buat = fopen("datatamu.txt","w");
+    fprintf(buat, "\0");
+    fclose(buat);
     int ulang;
     do{
         menu();
