@@ -29,6 +29,19 @@ int validasi_angka(int range1, int range2)
         validasi_angka(range1, range2);
     }
 }
+int validasi_lantai(int range1, int range2, int range3, int range4)
+{
+    char buff[1024], invalid;
+    int valid;
+    scanf("%[^\n]",buff);
+    getchar();
+    if (sscanf(buff, "%d%c", &valid, &invalid)==1 && valid >= range1 && valid <= range2 || valid >= range3 && valid <= range4){
+        return valid;
+    }else{
+        printf("\n\t\t\t\t Inputan Salah!\n\t\t\t\t Masukkan kembali.!\n\t\t\t\t >> ");
+        validasi_lantai(range1, range2, range3, range4);
+    }
+}
 struct Kamar
 {
     char nik[20];
