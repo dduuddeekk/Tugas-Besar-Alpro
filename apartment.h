@@ -989,11 +989,13 @@ void sewa_keluarga_malam(struct Kamar tamu){
     if(strlen(tamu.nik) != 16){
         printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
         system("pause");
+        sewa_keluarga_malam(tamu);
     }
     for(int i = 0; i < 16; i++){
         if(!isdigit(tamu.nik[i])){
-            printf("\t\t\t\t Inputan salah!kkkk\n\t\t\t\t Harap masukkan kembali!\n");
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
+            sewa_keluarga_malam(tamu);
         }
     }
     //for(int i = 0; i < 16; i++){
@@ -1495,13 +1497,15 @@ bool modulation_checker2(struct Kamar kamar, FILE *fptr){
     struct Kamar tamu;
     fptr = fopen("datatamu.txt","r");
     if(fptr == NULL){
-        printf("\t\t\t\t Maaf, Anda belum memesan kamar!\n");
+        return true;
     }else{
         do{
             fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu.nik, &tamu.nomor, &tamu.total, tamu.masuk, tamu.keluar);
-            if(strcmp(kamar.nik, tamu.nik) != 0){
+            if(strcmp(kamar.nik, tamu.nik) != 0 && kamar.nomor != tamu.nomor){
                 return true;
-            }else if(kamar.nomor != tamu.nomor){
+            }else if(strcmp(kamar.nik, tamu.nik) != 0 && kamar.nomor == tamu.nomor){
+                return true;
+            }else if(strcmp(kamar.nik, tamu.nik) == 0 && kamar.nomor != tamu.nomor){
                 return true;
             }else{
                 return false;
@@ -1514,18 +1518,20 @@ void batalkan_pesanan(){
     struct Kamar temp[15], kamar;
     int read, i = 0;
     FILE *masuk, *keluar, *riwayat;
-    bool checker;
+    bool checker, baca;
     printf("\t\t\t\t||Masukkan NIK Anda: ");
     scanf("%[^\n]",kamar.nik);
     getchar();
     if(strlen(kamar.nik) != 16){
         printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
         system("pause");
+        batalkan_pesanan();
     }
     for(int i = 0; i < 16; i++){
         if(!isdigit(kamar.nik[i])){
-            printf("\t\t\t\t Inputan salah!kkkk\n\t\t\t\t Harap masukkan kembali!\n");
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
             system("pause");
+            batalkan_pesanan();
         }
     }
     printf("\t\t\t\t||Masukkan nomor kamar Anda: ");
@@ -1545,8 +1551,8 @@ void batalkan_pesanan(){
         printf("\t\t\t\t Anda tidak dapat membatalkan pesanan\n\t\t\t\t karena Anda belum memesan.\n\t\t\t\t Atau Anda menginput data yang salah.\n");
         system("pause");
     }else{
-        masuk = fopen("datatamu.txt","r");
         keluar = fopen("backup.txt","a");
+        masuk = fopen("datatamu.txt","r");
         do{
             fscanf(masuk, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp[i].nik, &temp[i].nomor, &temp[i].total, temp[i].masuk, temp[i].keluar);
             if(strcmp(temp[i].nik,kamar.nik)==0 && temp[i].nomor == kamar.nomor){
@@ -1557,25 +1563,10 @@ void batalkan_pesanan(){
                         system("pause");
                         continue;
                     }else{
-                        for(int j = 0; j < 16; j++){
-                            if(j >= 16) break;
-                            else if(temp[i].nik[j] == 0) break;
-                            else fprintf(keluar,"%c", temp[i].nik[j]);
-                        }fprintf(keluar, ",%d,%d,", temp[i].nomor, temp[i].total);
-                        for(int j = 0; j < 16; j++){
-                            if(j >= 11) break;
-                            else if(temp[i].masuk[j] == 0) break;
-                            else fprintf(keluar, "%c", temp[i].masuk[j]);
-                        }fprintf(keluar, ",");
-                        for(int j = 0; j < 16; j++){
-                            if(j >= 11) break;
-                            else if(temp[i].keluar[j] == 0) break;
-                            else fprintf(keluar, "%c", temp[i].keluar[j]);
-                        }fprintf(keluar, "\n");
+                        fprintf(keluar, "%s,%d,%d,%s,%s\n", temp[i].nik, temp[i].nomor, temp[i].total, temp[i].masuk, temp[i].keluar);
+                        baca == true;
                     }
         }while(!feof(masuk));
-        fclose(keluar);
-        fclose(masuk);
             switch(kamar.nomor){
                 case 101:
                     remove("struk101.txt");
@@ -1640,9 +1631,15 @@ void batalkan_pesanan(){
                 default:
                     printf("\t\t\t\t Terima kasih.\n");
             }
+        fclose(keluar);
+        fclose(masuk);
+    }
+        if(baca == false){
             remove("datatamu.txt");
             rename("backup.txt", "datatamu.txt");
-    }
+        }else{
+            printf("...");
+        }
 }
 void ulang_ulang();
 void mainmenu(){
