@@ -1582,6 +1582,15 @@ void batalkan_pesanan(){
         fclose(masuk);
         system("ren 'datatamu.txt' 'riwayat.txt'");
         system("ren 'backup.txt' 'datatamu.txt'");
+        int result = rename("datatamu.txt","riwayat.txt");
+        int resul = rename("backup.txt","datatamu.txt");
+        if(result == 0 && result == 0){
+            printf("\t\t\t\t Success.\n");
+            system("pause");
+        }else{
+            printf("\t\t\t\t Failed.\n");
+            system("pause");
+        }
         //rename("datatamu.txt","riwayat.txt");
         //rename("backup.txt","datatamu.txt");
             switch(kamar.nomor){
@@ -1681,6 +1690,8 @@ void batalkan_pesanan(){
                     rename("backup.txt","datatamu.txt");
             }
     }
+    rename("datatamu.txt","riwayat.txt");
+    rename("backup.txt","datatamu.txt");
 }
 void ulang_ulang();
 void mainmenu(){
