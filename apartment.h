@@ -1332,16 +1332,16 @@ void paketan(){
     }
 }
 struct Laundry{
-    char nik[16];
+    char nik[20];
     char username[1024];
     int nomor;
 };
-bool modulation_laundry(char nik[16], int nomor, FILE *fptr){
+bool modulation_laundry(struct Laundry layan, FILE *fptr){
     struct Kamar tamu;
     fptr = fopen("datatamu.txt","r");
     do{
         fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu.nik, &tamu.nomor, &tamu.total, tamu.masuk, tamu.keluar);
-        if(strcmp(nik, tamu.nik) == 0 && nomor == tamu.nomor){
+        if(strcmp(layan.nik, tamu.nik) == 0 && layan.nomor == tamu.nomor){
             return false;
         }else{
             return true;
@@ -1391,11 +1391,16 @@ void laundry(){
     getchar();
     int n = strlen(layan.username);
     int i = 0;
+    checker = modulation_laundry(layan, periksa);
     while(!feof(periksa)){
         fscanf(periksa, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
         if(strcmp(tamu[i].nik, layan.nik)!=0 || tamu[i].nomor != layan.nomor){
             printf("\t\t\t\t Maaf kamu tidak bisa mendaftar.\n\t\t\t\t Kamu belum memesan apartemen.\n\t\t\t\t Silakan melakukan pemesanan terlebih dahulu!\n");
             system("pause");
+            system("cls");
+            mainmenu();
+            exit(0);
+            break;
             checker = true;
         }
         i++;
@@ -1414,7 +1419,6 @@ void laundry(){
         system("cls");
         printf("\t\t\t\t Maaf kamu tidak bisa mendaftar.\n\t\t\t\t Kamu belum memesan apartemen.\n\t\t\t\t Silakan melakukan pemesanan terlebih dahulu!\n");
         system("pause");
-        laundry();
     }
     else{
         if(layan.nomor == 101) bersih = fopen("kartulaundry101.txt","w");
