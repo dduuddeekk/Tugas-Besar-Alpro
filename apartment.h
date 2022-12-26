@@ -2953,12 +2953,12 @@ struct Laundry
 };
 bool modulation_laundry(struct Laundry layan, FILE *fptr)
 {
-    struct Kamar tamu;
-    fptr = fopen("datatamu.txt", "r");
+    struct Kamar tamu[15];
+    int i = 0;
     do
     {
-        fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu.nik, &tamu.nomor, &tamu.total, tamu.masuk, tamu.keluar);
-        if (strcmp(layan.nik, tamu.nik) == 0 && layan.nomor == tamu.nomor)
+        fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
+        if (strcmp(layan.nik, tamu[i].nik) == 0 && layan.nomor == tamu[i].nomor)
         {
             return false;
         }
@@ -2966,6 +2966,7 @@ bool modulation_laundry(struct Laundry layan, FILE *fptr)
         {
             return true;
         }
+        i++;
     } while (!feof(fptr));
     fclose(fptr);
 }
@@ -3019,6 +3020,7 @@ void laundry()
     periksa = fopen("datatamu.txt", "r");
     checker = modulation_laundry(layan, periksa);
     fclose(periksa);
+    /*
     while (!feof(periksa))
     {
         fscanf(periksa, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
@@ -3046,7 +3048,7 @@ void laundry()
             checker = true;
             break;
         }
-    }
+    }*/
     if (checker == true)
     {
         system("cls");
@@ -3141,6 +3143,8 @@ void laundry()
         system("pause");
         system("cls");
     }
+    fclose(bersih);
+    fclose(periksa);
 }
 // BREAKFAST
 bool modulation_breakfast(struct Kamar tamu, FILE *fptr)
@@ -3269,7 +3273,7 @@ void breakfast()
         } while (!feof(cekdata2) && stop == 1);
         fclose(cekdata2);
     }
-    if (checker2 == true)
+    if (stop == 1)
     {
         printf("\t\t\t\t Kamu belum memesan layanan apartemen.\n");
         system("pause");
@@ -3280,8 +3284,11 @@ void breakfast()
     else
     {
         breakfast_print(tamu, tulis, n, nama);
-        fclose(tulis);
         system("pause");
+        system("cls");
+        mainmenu();
+        exit(0);
+        fclose(tulis);
     }
 }
 void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1024], int total);
@@ -3443,7 +3450,7 @@ void tambahanlayanan()
 bool modulation_cancelation(struct Kamar tamu, FILE *fptr)
 {
     struct Kamar tempo[15];
-    int i;
+    int i = 0;
     do
     {
         fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo[i].nik, &tempo[i].nomor, &tempo[i].total, tempo[i].masuk, tempo[i].keluar);
