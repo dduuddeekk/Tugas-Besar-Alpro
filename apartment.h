@@ -12,6 +12,7 @@
 #define PRIVATE_MALAM 350000
 #define PRIVATE_BULAN 9000000
 #define PRIVATE_TAHUN 98000000
+#define SARAPAN 129999
 void mainmenu();
 int validasi_angka(int range1, int range2)
 {
@@ -2986,6 +2987,7 @@ void laundry()
     printf("\t\t\t\t || ==================================================================== ||\n");
     system("pause");
     system("cls");
+    printf("\t\t\t\t    SILAKAN MELAKUKAN  REGISTRASI\n");
     printf("\t\t\t\t || Masukkan NIK Anda               : ");
     scanf("%[^\n]", layan.nik);
     getchar();
@@ -3135,6 +3137,267 @@ void laundry()
         system("cls");
     }
 }
+// BREAKFAST
+bool modulation_breakfast(struct Kamar tamu, FILE *fptr)
+{
+    struct Kamar tempo;
+    if (fptr == NULL)
+    {
+        return true;
+    }
+    else
+    {
+        do
+        {
+            fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo.nik, &tempo.nomor, &tempo.total, tempo.masuk, tempo.keluar);
+            if (strcmp(tempo.nik, tamu.nik) != 0 && tempo.nomor != tamu.nomor)
+            {
+                return true;
+            }
+            else if (strcmp(tempo.nik, tamu.nik) != 0 && tempo.nomor == tamu.nomor)
+            {
+                return true;
+            }
+            else if (strcmp(tempo.nik, tamu.nik) == 0 && tempo.nomor != tamu.nomor)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } while (!feof(fptr));
+        fclose(fptr);
+    }
+}
+bool modulation_breakfast_true()
+{
+    return true;
+}
+bool modulation_breakfast_false()
+{
+    return false;
+}
+void breakfast_print(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1024]);
+void breakfast()
+{
+    bool checker, checker2;
+    struct Kamar tamu, tempo[15];
+    FILE *tulis, *cekdata, *cekdata2;
+    int n, i = 0;
+    char nama[1024];
+    system("cls");
+    printf("\t\t\t\t || ==================================================================== ||\n");
+    printf("\t\t\t\t ||                           LAYANAN BREAKFAST                          ||\n");
+    printf("\t\t\t\t || ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ||\n");
+    printf("\t\t\t\t ||                           I N F O R M A S I                          ||\n");
+    printf("\t\t\t\t ||                           B R E A K F A S T                          ||\n");
+    printf("\t\t\t\t || ==================================================================== ||\n");
+    printf("\t\t\t\t ||      Breakfast merupakan layanan tambahan yang ada di Apartemen      ||\n");
+    printf("\t\t\t\t ||                           J U N E K A R T A                          ||\n");
+    printf("\t\t\t\t ||    Customer dapat menggunakan layanan ini apabila sudah melakukan    ||\n");
+    printf("\t\t\t\t ||   registrasi di Apartment. Layanan breakfast dihitung berdasarkan    ||\n");
+    printf("\t\t\t\t ||  lama customer ingin memesan menggunakan layanan ini. Layanan dapat  ||\n");
+    printf("\t\t\t\t ||  diperpanjang sesuai keinginan dengan biaya Rp. 129.999,00 per hari. ||\n");
+    printf("\t\t\t\t || ==================================================================== ||\n");
+    system("pause");
+    system("cls");
+    printf("\t\t\t\t || Masukkan nama lengkap Anda : ");
+    scanf("%[^\n]", nama);
+    getchar();
+    printf("\t\t\t\t || Masukkan NIK Anda          : ");
+    scanf("%[^\n]", tamu.nik);
+    getchar();
+    if (strlen(tamu.nik) != 16)
+    {
+        printf("\t\t\t\t Input kamu salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        breakfast();
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        if (!isdigit(tamu.nik[i]))
+        {
+            printf("\t\t\t\t Input kamu salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            breakfast();
+        }
+    }
+    printf("\t\t\t\t || Masukkan nomor kamar Anda  : ");
+    tamu.nomor = validasi_angka(101, 305);
+    printf("\t\t\t\t || Masukkan lama penggunaan   : ");
+    n = validasi_angka(1, 365);
+    system("cls");
+    cekdata = fopen("datatamu.txt","r");
+    checker = modulation_breakfast(tamu, cekdata);
+    fclose(cekdata);
+    if (checker == true)
+    {
+        printf("\t\t\t\t Kamu belum memesan layanan apartemen.\n\t\t\t\t Atau kamu salah memasukkan data.\n");
+        system("pause");
+        system("cls");
+        mainmenu();
+        exit(0);
+    }
+    else
+    {
+        cekdata2 = fopen("datatamu.txt", "r");
+        do
+        {
+            fscanf(cekdata2, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo[i].nik, &tempo[i].nomor, &tempo[i].total, tempo[i].masuk, tempo[i].keluar);
+            if (strcmp(tamu.nik, tempo[i].nik) == 0 && tempo[i].nomor == tempo[i].nomor)
+            {
+                break;
+                fclose(cekdata2);
+                tamu.total = tempo[i].total;
+                sprintf(tamu.masuk, "%s", tempo[i].keluar);
+                sprintf(tamu.keluar, "%s", tempo[i].keluar);
+                checker2 = modulation_breakfast_false();
+            }
+            else
+            {
+                checker2 = modulation_breakfast_true();
+                continue;
+            }
+            i++;
+        } while (!feof(cekdata2));
+        fclose(cekdata2);
+    }
+    if (checker2 == true)
+    {
+        printf("\t\t\t\t Kamu belum memesan layanan apartemen.\n");
+        system("pause");
+        system("cls");
+        mainmenu();
+        exit(0);
+    }
+    else
+    {
+        printf("%s\n%s\n", tamu.masuk, tamu.keluar);
+        system("pause");
+        breakfast_print(tamu, tulis, n, nama);
+        system("pause");
+    }
+}
+void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1024], int total);
+void breakfast_print(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1024])
+{
+    int total;
+    total = (n * SARAPAN) + tamu.total;
+    switch (tamu.nomor)
+    {
+    case 101:
+        tulis = fopen("struk101.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 102:
+        tulis = fopen("struk102.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 103:
+        tulis = fopen("struk103.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 104:
+        tulis = fopen("struk104.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 105:
+        tulis = fopen("struk105.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 201:
+        tulis = fopen("struk201.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 202:
+        tulis = fopen("struk202.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 203:
+        tulis = fopen("struk203.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 204:
+        tulis = fopen("struk204.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 205:
+        tulis = fopen("struk205.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 301:
+        tulis = fopen("struk301.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 302:
+        tulis = fopen("struk302.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 303:
+        tulis = fopen("struk303.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 304:
+        tulis = fopen("struk304.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    case 305:
+        tulis = fopen("struk305.txt", "w");
+        breakfast_print2(tamu, tulis, n, nama_pengguna, total);
+        fclose(tulis);
+        break;
+    default:
+        printf("Error\n");
+    }
+}
+void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1024], int total)
+{
+    printf("==================================================\n");
+    printf("\n");
+    printf("   Nama Pemilik    : %s\n", nama_pengguna);
+    printf("   NIK (ID tamu)   : %s\n", tamu.nik);
+    printf("\n");
+    printf("   Nomor Kamar     : %d\n", tamu.nomor);
+    printf("   Layanan Tambahan: Breakfast %d hari.\n", n);
+    printf("   Total           : Rp. %d\n", total);
+    printf("\n");
+    printf("==================================================\n");
+    printf("\n");
+    printf("   Tanggal Memesan : %s\n", tamu.masuk);
+    printf("   Jatuh Tempo     : %s\n", tamu.keluar);
+    printf("\n");
+    printf("==================================================\n");
+    fprintf(tulis, "==================================================\n");
+    fprintf(tulis, "\n");
+    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+    fprintf(tulis, "   NIK (ID tamu)   : %s\n", tamu.nik);
+    fprintf(tulis, "\n");
+    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+    fprintf(tulis, "   Layanan Tambahan: Breakfast %d hari.\n", n);
+    fprintf(tulis, "   Total           : Rp. %d\n", total);
+    fprintf(tulis, "\n");
+    fprintf(tulis, "==================================================\n");
+    fprintf(tulis, "\n");
+    fprintf(tulis, "   Tanggal Memesan : %s\n", tamu.masuk);
+    fprintf(tulis, "   Jatuh Tempo     : %s\n", tamu.keluar);
+    fprintf(tulis, "\n");
+    fprintf(tulis, "==================================================\n");
+}
 // PROSEDUR UNTUK TAMBAHAN LAYANAN YANG ADA DI APARTMENT
 void tambahanlayanan()
 {
@@ -3145,21 +3408,19 @@ void tambahanlayanan()
     printf("\t\t\t\t||         L A Y A N A N         |       H A R G A       ||\n");
     printf("\t\t\t\t|| ===================================================== ||\n");
     printf("\t\t\t\t||   [1]  | Laundry              |  Rp. 7.999 /kg        ||\n");
-    printf("\t\t\t\t||   [2]  | Housekeeping         |  Rp. 5.000 /hari      ||\n");
-    printf("\t\t\t\t||   [3]  | Breakfast            |  Rp. 50.000 /porsi    ||\n");
+    printf("\t\t\t\t||   [2]  | Breakfast            |  Rp. 59.999 /pagi     ||\n");
     printf("\t\t\t\t||   [0]  | Kembali ke menu awal                         ||\n");
     printf("\t\t\t\t|| ===================================================== ||\n");
     int tambah;
     printf("\t\t\t\t|| Masukkan pilihan: ");
-    tambah = validasi_angka(0, 3);
+    tambah = validasi_angka(0, 2);
     switch (tambah)
     {
     case 1:
         laundry();
         break;
     case 2:
-        break;
-    case 3:
+        breakfast();
         break;
     default:
         printf("\t\t\t\t Terima kasih karena telah menggunakan layanan kami.\n");
