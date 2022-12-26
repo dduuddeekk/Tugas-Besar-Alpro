@@ -422,7 +422,9 @@ void tampilkan_tempo(int nomor)
         break;
     default:
         printf("\t\t\t\t Tidak ada.\n");
+        fclose(buka);
     }
+    fclose(buka);
 }
 void pengecekan_tempo()
 { // jatuh tempo
@@ -488,7 +490,7 @@ void pengecekan_tempo()
             }
         } while (!feof(cekdata));
     }
-    fclose(cekdata);*/
+    */fclose(cekdata);
 }
 void struk_malam(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis)
 {
@@ -1263,6 +1265,7 @@ void struk_malam(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int 
             }
         }
     }
+    fclose(tulis);
 }
 void struk_bulan(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis)
 {
@@ -1412,6 +1415,7 @@ void struk_bulan(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int 
             fclose(tulis);
         }
     }
+    fclose(tulis);
 }
 void struk_tahun(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis)
 {
@@ -1558,8 +1562,8 @@ void sewa_keluarga_malam(struct Kamar tamu)
     system("cls");
     int a = tm.tm_mday + n;
     cekdata = fopen("datatamu.txt", "r");
-    cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
+    fclose(cekdata);
     if (check == true)
     {
         printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
@@ -1822,6 +1826,7 @@ void sewa_keluarga_bulan(struct Kamar tamu)
     system("cls");
     cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
+    fclose(cekdata);
     if (check == true)
     {
         printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
@@ -1993,6 +1998,7 @@ void sewa_keluarga_tahun(struct Kamar tamu)
     system("cls");
     cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
+    fclose(cekdata);
     if (check == true)
     {
         printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
@@ -2148,6 +2154,7 @@ void sewa_pribadi_malam(struct Kamar tamu)
     int a = tm.tm_mday + n;
     cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
+    fclose(cekdata);
     if (check == true)
     {
         printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
@@ -2446,6 +2453,7 @@ void sewa_pribadi_bulan(struct Kamar tamu)
     system("cls");
     cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
+    fclose(cekdata);
     if (check == true)
     {
         printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
@@ -2653,6 +2661,7 @@ void sewa_pribadi_tahun(struct Kamar tamu)
     system("cls");
     cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
+    fclose(cekdata);
     if (check == true)
     {
         printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
@@ -2966,7 +2975,7 @@ void laundry()
     bool checker;
     struct Laundry layan;
     struct Kamar tamu[15];
-    FILE *bersih, *periksa = fopen("datatamu.txt", "r");
+    FILE *bersih, *periksa;
     printf("\t\t\t\t || ==================================================================== ||\n");
     printf("\t\t\t\t ||                         WELCOME TO APART LAUNDRY                     ||\n");
     printf("\t\t\t\t || ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ||\n");
@@ -3007,7 +3016,9 @@ void laundry()
     getchar();
     int n = strlen(layan.username);
     int i = 0;
+    periksa = fopen("datatamu.txt", "r");
     checker = modulation_laundry(layan, periksa);
+    fclose(periksa);
     while (!feof(periksa))
     {
         fscanf(periksa, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tamu[i].nik, &tamu[i].nomor, &tamu[i].total, tamu[i].masuk, tamu[i].keluar);
@@ -3269,6 +3280,7 @@ void breakfast()
     else
     {
         breakfast_print(tamu, tulis, n, nama);
+        fclose(tulis);
         system("pause");
     }
 }
@@ -3357,6 +3369,7 @@ void breakfast_print(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1
     default:
         printf("Error\n");
     }
+    fclose(tulis);
 }
 void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[1024], int total)
 {
@@ -3391,6 +3404,7 @@ void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[
     fprintf(tulis, "\n");
     fprintf(tulis, "==================================================\n");
     char buffer[255];
+    fclose(tulis);
     FILE *breakfast = fopen("breakfastbook.txt", "a");
     sprintf(buffer, "%s,%d,%d,%s,%s\n", tamu.nik, tamu.nomor, total - tamu.total, tamu.masuk, tamu.keluar);
     fprintf(breakfast, "%s", buffer);
@@ -3540,7 +3554,7 @@ void batalkan_pesanan()
 }
 void renama()
 {
-    if (rename("datatamu.txt", "riwayat.txt") != 0)
+    if (remove("datatamu.txt") != 0)
     {
         fprintf(stderr, "%d\n", errno);
         perror("Error msg");
