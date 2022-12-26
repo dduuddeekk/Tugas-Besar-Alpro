@@ -3442,13 +3442,15 @@ void tambahanlayanan()
 //  PROSEDUR BATALKAN PESANAN
 bool modulation_cancelation(struct Kamar tamu, FILE *fptr)
 {
-    struct Kamar tempo;
+    struct Kamar tempo[15];
+    int i;
     do
     {
-        fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo.nik, &tempo.nomor, &tempo.total, tempo.masuk, tempo.keluar);
-        if (strcmp(tempo.nik, tamu.nik) == 0 && tempo.nomor == tamu.nomor)
+        fscanf(fptr, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo[i].nik, &tempo[i].nomor, &tempo[i].total, tempo[i].masuk, tempo[i].keluar);
+        if (strcmp(tempo[i].nik, tamu.nik) == 0 && tempo[i].nomor == tamu.nomor)
         {
             return false;
+            break;
         }
         else
         {
