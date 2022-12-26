@@ -3183,8 +3183,8 @@ void breakfast()
 {
     bool checker, checker2;
     struct Kamar tamu, tempo[15];
-    FILE *tulis, *cekdata, *cekdata2;
-    int n, i = 0;
+    FILE *tulis, *cekdata, *cekdata2, validasi;
+    int n, i = 0, stop = 0;
     char nama[1024];
     system("cls");
     printf("\t\t\t\t || ==================================================================== ||\n");
@@ -3228,7 +3228,7 @@ void breakfast()
     printf("\t\t\t\t || Masukkan lama penggunaan   : ");
     n = validasi_angka(1, 365);
     system("cls");
-    cekdata = fopen("datatamu.txt","r");
+    cekdata = fopen("datatamu.txt", "r");
     checker = modulation_breakfast(tamu, cekdata);
     fclose(cekdata);
     if (checker == true)
@@ -3247,20 +3247,21 @@ void breakfast()
             fscanf(cekdata2, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo[i].nik, &tempo[i].nomor, &tempo[i].total, tempo[i].masuk, tempo[i].keluar);
             if (strcmp(tamu.nik, tempo[i].nik) == 0 && tempo[i].nomor == tempo[i].nomor)
             {
-                break;
                 fclose(cekdata2);
                 tamu.total = tempo[i].total;
-                sprintf(tamu.masuk, "%s", tempo[i].keluar);
+                sprintf(tamu.masuk, "%s", tempo[i].masuk);
                 sprintf(tamu.keluar, "%s", tempo[i].keluar);
                 checker2 = modulation_breakfast_false();
+                stop = 0;
             }
             else
             {
                 checker2 = modulation_breakfast_true();
+                stop = 1;
                 continue;
             }
             i++;
-        } while (!feof(cekdata2));
+        } while (!feof(cekdata2) && stop == 1);
         fclose(cekdata2);
     }
     if (checker2 == true)
@@ -3273,8 +3274,6 @@ void breakfast()
     }
     else
     {
-        printf("%s\n%s\n", tamu.masuk, tamu.keluar);
-        system("pause");
         breakfast_print(tamu, tulis, n, nama);
         system("pause");
     }
@@ -3397,6 +3396,11 @@ void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[
     fprintf(tulis, "   Jatuh Tempo     : %s\n", tamu.keluar);
     fprintf(tulis, "\n");
     fprintf(tulis, "==================================================\n");
+    char buffer[255];
+    FILE *breakfast = fopen("breakfastbook.txt","a");
+    sprintf(buffer, "%s,%d,%d,%s,%s\n", tamu.nik, tamu.nomor, total, tamu.masuk, tamu.keluar);
+    fprintf(breakfast, "%s", buffer);
+    fclose(breakfast);
 }
 // PROSEDUR UNTUK TAMBAHAN LAYANAN YANG ADA DI APARTMENT
 void tambahanlayanan()
