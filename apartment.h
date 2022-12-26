@@ -1558,7 +1558,7 @@ void sewa_keluarga_malam(struct Kamar tamu)
     system("cls");
     int a = tm.tm_mday + n;
     cekdata = fopen("datatamu.txt", "r");
-    cekdata = fopen("datatamu.txt","r");
+    cekdata = fopen("datatamu.txt", "r");
     check = modulation_cheker(tamu, cekdata);
     if (check == true)
     {
@@ -3448,7 +3448,7 @@ void batalkan_case(int nomor);
 void batalkan_pesanan()
 {
     FILE *cekdata;
-    FILE *temp; 
+    FILE *temp;
     FILE *tulisdata;
     FILE *batal;
     time_t waktu;
@@ -3483,71 +3483,77 @@ void batalkan_pesanan()
     cekdata = fopen("datatamu.txt", "r");
     checker = modulation_cancelation(tamu, cekdata);
     fclose(cekdata);
-     if (checker == true)
-     {
-         printf("\t\t\t\t Maaf Anda belum memesan apartemen.\n\t\t\t\t Atau Anda menginput data yang salah.\n\t\t\t\t Silakan kembali ke halaman awal.\n");
-         system("pause");
-         system("cls");
-         mainmenu();
-         exit(0);
-     }
-    
+    if (checker == true)
+    {
+        printf("\t\t\t\t Maaf Anda belum memesan apartemen.\n\t\t\t\t Atau Anda menginput data yang salah.\n\t\t\t\t Silakan kembali ke halaman awal.\n");
+        system("pause");
+        system("cls");
+        mainmenu();
+        exit(0);
+    }
+
     else
     {
-    char buffer[1024];
-    temp = fopen("datatamu.txt", "r");
-    do
-    {
-        tulisdata = fopen("backup.txt", "a");
-        fscanf(temp, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo[i].nik, &tempo[i].nomor, &tempo[i].total, tempo[i].masuk, tempo[i].keluar);
-        if (strcmp(tempo[i].nik, tamu.nik) == 0 && tempo[i].nomor == tamu.nomor)
+        char buffer[1024];
+        temp = fopen("datatamu.txt", "r");
+        do
         {
-            printf("\t\t\t\t Terima kasih telah menggunakan layanan kami.\n\t\t\t\t Pengembalian dana sebesar 49%%.\n");
-            printf("|| Tanggal Memesan         : %s\n", tempo[i].masuk);
-            printf("|| Tanggal Pembatalan      : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year);
-            printf("|| Total Pengembalian Dana : %.0lf\n", (double)tempo[i].total - (double)((0.51) * tempo[i].total));
-            sprintf(buffer, "%s,%d,%d,%s,%02d/%02d/%04d\n", tamu.nik, tamu.nomor, (double)tempo[i].total - (double)((0.51) * tempo[i].total), tempo[i].masuk, tm.tm_mday, tm.tm_mon, tm.tm_year);
-            continue;
-        }
-        else
-        {
-            fprintf(tulisdata, "%s,%d,%d,%s,%s\n", tempo[i].nik, tempo[i].nomor, tempo[i].total, tempo[i].masuk, tempo[i].keluar);
-        }
-        i++;
-    } while (!feof(temp));
-    fclose(tulisdata);
-    fclose(temp);
-    batal = fopen("riwayatpembatalan.txt", "a");
-    fprintf(batal, "%s", buffer);
-    fclose(batal);
-    // periksa = 1;
-    //}
-    // if (periksa != 1)
-    //{
-    // printf("\t\t\t\t Terjadi kesalahan dalam program.\n\t\t\t\t Harap hubungi admin di nomor:\n\t\t\t\t +62XXXXXXXXXXX\n");
-    // system("pause");
-    // system("cls");
-    // mainmenu();
-    // exit(0);
-    //}
-    batalkan_case(tamu.nomor);
-    fclose(cekdata);
-    fclose(temp);
-    fclose(tulisdata);
-    fclose(batal);
-    renama();
+            tulisdata = fopen("backup.txt", "a");
+            fscanf(temp, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", tempo[i].nik, &tempo[i].nomor, &tempo[i].total, tempo[i].masuk, tempo[i].keluar);
+            if (strcmp(tempo[i].nik, tamu.nik) == 0 && tempo[i].nomor == tamu.nomor)
+            {
+                printf("\t\t\t\t Terima kasih telah menggunakan layanan kami.\n\t\t\t\t Pengembalian dana sebesar 49%%.\n");
+                printf("|| Tanggal Memesan         : %s\n", tempo[i].masuk);
+                printf("|| Tanggal Pembatalan      : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("|| Total Pengembalian Dana : %.0lf\n", (double)tempo[i].total - (double)((0.51) * tempo[i].total));
+                sprintf(buffer, "%s,%d,%d,%s,%02d/%02d/%04d\n", tamu.nik, tamu.nomor, (double)tempo[i].total - (double)((0.51) * tempo[i].total), tempo[i].masuk, tm.tm_mday, tm.tm_mon, tm.tm_year);
+                continue;
+            }
+            else
+            {
+                fprintf(tulisdata, "%s,%d,%d,%s,%s\n", tempo[i].nik, tempo[i].nomor, tempo[i].total, tempo[i].masuk, tempo[i].keluar);
+            }
+            i++;
+        } while (!feof(temp));
+        fclose(tulisdata);
+        fclose(temp);
+        batal = fopen("riwayatpembatalan.txt", "a");
+        fprintf(batal, "%s", buffer);
+        fclose(batal);
+        // periksa = 1;
+        //}
+        // if (periksa != 1)
+        //{
+        // printf("\t\t\t\t Terjadi kesalahan dalam program.\n\t\t\t\t Harap hubungi admin di nomor:\n\t\t\t\t +62XXXXXXXXXXX\n");
+        // system("pause");
+        // system("cls");
+        // mainmenu();
+        // exit(0);
+        //}
+        batalkan_case(tamu.nomor);
+        fclose(cekdata);
+        fclose(temp);
+        fclose(tulisdata);
+        fclose(batal);
+        renama();
     }
 }
 void renama()
 {
-    if(rename("datatamu.txt", "riwayat.txt")!=0){
+    if (rename("datatamu.txt", "riwayat.txt") != 0)
+    {
         fprintf(stderr, "%d\n", errno);
         perror("Error msg");
-    }else printf("ok");
-    if(rename("backup.txt", "datatamu.txt")!=0){
+    }
+    else
+        printf("ok");
+    if (rename("backup.txt", "datatamu.txt") != 0)
+    {
         fprintf(stderr, "%d\n", errno);
         perror("Error msg");
-    }else printf("ok");
+    }
+    else
+        printf("ok");
     printf("\t\t\t\t Pembatalan berhasil.\n\t\t\t\t Sampai jumpa di lain hari :)\n");
     system("pause");
     system("cls");
