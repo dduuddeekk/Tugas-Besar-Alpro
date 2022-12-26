@@ -1466,30 +1466,22 @@ bool modulation_cheker(struct Kamar tamu, FILE *cekdata)
 {
     char temp_nik[20], temp_masuk[20], temp_keluar[20];
     int temp_nomor, temp_total;
-    if (cekdata == NULL)
+    do
     {
-        cekdata = fopen("datatamu.txt", "w");
-        return true;
-    }
-    else
-    {
-        do
+        fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
+        if (strcmp(temp_nik, tamu.nik) == 0)
         {
-            fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
-            if (strcmp(temp_nik, tamu.nik) == 0)
-            {
-                return true;
-            }
-            else if (temp_nomor == tamu.nomor)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        } while (!feof(cekdata));
-    }
+            return true;
+        }
+        else if (temp_nomor == tamu.nomor)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    } while (!feof(cekdata));
     fclose(cekdata);
 }
 void sewa_keluarga_malam(struct Kamar tamu)
@@ -1565,6 +1557,7 @@ void sewa_keluarga_malam(struct Kamar tamu)
     system("cls");
     int a = tm.tm_mday + n;
     cekdata = fopen("datatamu.txt", "r");
+    cekdata = fopen("datatamu.txt","r");
     check = modulation_cheker(tamu, cekdata);
     if (check == true)
     {
@@ -3397,8 +3390,8 @@ void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[
     fprintf(tulis, "\n");
     fprintf(tulis, "==================================================\n");
     char buffer[255];
-    FILE *breakfast = fopen("breakfastbook.txt","a");
-    sprintf(buffer, "%s,%d,%d,%s,%s\n", tamu.nik, tamu.nomor, total-tamu.total, tamu.masuk, tamu.keluar);
+    FILE *breakfast = fopen("breakfastbook.txt", "a");
+    sprintf(buffer, "%s,%d,%d,%s,%s\n", tamu.nik, tamu.nomor, total - tamu.total, tamu.masuk, tamu.keluar);
     fprintf(breakfast, "%s", buffer);
     fclose(breakfast);
 }
