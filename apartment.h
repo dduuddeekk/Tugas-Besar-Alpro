@@ -11,7 +11,7 @@
 #define KELUARGA_TAHUN 156000000
 #define PRIVATE_MALAM 350000
 #define PRIVATE_BULAN 9000000
-#define PPRIVATE_TAHUN 98000000
+#define PRIVATE_TAHUN 98000000
 void mainmenu();
 int validasi_angka(int range1, int range2)
 {
@@ -33,13 +33,32 @@ int validasi_lantai(int range1, int range2, int range3, int range4)
 {
     char buff[1024], invalid;
     int valid;
-    scanf("%[^\n]",buff);
+    scanf("%[^\n]", buff);
     getchar();
-    if (sscanf(buff, "%d%c", &valid, &invalid)==1 && valid >= range1 && valid <= range2 || valid >= range3 && valid <= range4){
+    if (sscanf(buff, "%d%c", &valid, &invalid) == 1 && valid >= range1 && valid <= range2 && valid >= range3 && valid <= range4)
+    {
         return valid;
-    }else{
+    }
+    else
+    {
         printf("\n\t\t\t\t Inputan Salah!\n\t\t\t\t Masukkan kembali.!\n\t\t\t\t >> ");
         validasi_lantai(range1, range2, range3, range4);
+    }
+}
+int validasi_tahun(int range1)
+{
+    char buff[1024], invalid;
+    int valid;
+    scanf("%[^\n]", buff);
+    getchar();
+    if (sscanf(buff, "%d%c", &valid, &invalid) == 1 && valid >= range1)
+    {
+        return valid;
+    }
+    else
+    {
+        printf("\n\t\t\t\t Inputan Salah!\n\t\t\t\t Masukkan kembali.!\n\t\t\t\t >> ");
+        validasi_tahun(range1);
     }
 }
 struct Kamar
@@ -536,7 +555,7 @@ void struk_malam(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int 
                 fclose(tulis);
             }
         }
-        else if (tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10)
+        else if (tm.tm_mon == 1 && 3 && 5 && 7 && 8 && 10)
         {
             if (a > 31)
             {
@@ -919,7 +938,7 @@ void struk_malam(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int 
                 fclose(tulis);
             }
         }
-        else if (tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10)
+        else if (tm.tm_mon == 1 && 3 && 5 && 7 && 8 && 10)
         {
             if (a > 31)
             {
@@ -1260,6 +1279,56 @@ void struk_bulan(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int 
         }
     }
 }
+void struk_tahun(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis)
+{
+    waktu = time(NULL);
+    struct tm tm = *localtime(&waktu);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
+    printf("==================================================\n");
+    printf("\n");
+    printf("   Nama Pemilik    : %s\n", nama_pengguna);
+    printf("   NIK (ID tamu)   : ");
+    for (int i = 0; i < 16; i++)
+    {
+        if (i >= 16)
+            break;
+        else
+            printf("%c", tamu.nik[i]);
+    }
+    printf("\n");
+    printf("   Nomor Kamar     : %d\n", tamu.nomor);
+    printf("   Total           : Rp. %d\n", harga);
+    printf("\n");
+    printf("==================================================\n");
+    printf("\n");
+    printf("   Tanggal Memesan : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year);
+    printf("   Jatuh Tempo     : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year + n);
+    printf("\n");
+    printf("==================================================\n");
+    fprintf(tulis, "==================================================\n");
+    fprintf(tulis, "\n");
+    fprintf(tulis, "   Nama Pemilik    : %s\n", nama_pengguna);
+    fprintf(tulis, "   NIK (ID tamu)   : ");
+    for (int i = 0; i < 16; i++)
+    {
+        if (i >= 16)
+            break;
+        else
+            fprintf(tulis, "%c", tamu.nik[i]);
+    }
+    fprintf(tulis, "\n");
+    fprintf(tulis, "   Nomor Kamar     : %d\n", tamu.nomor);
+    fprintf(tulis, "   Total           : Rp. %d\n", harga);
+    fprintf(tulis, "\n");
+    fprintf(tulis, "==================================================\n");
+    fprintf(tulis, "\n");
+    fprintf(tulis, "   Tanggal Memesan : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year);
+    fprintf(tulis, "   Jatuh Tempo     : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year + n);
+    fprintf(tulis, "\n");
+    fprintf(tulis, "==================================================\n");
+    fclose(tulis);
+}
 bool modulation_cheker(struct Kamar tamu, FILE *cekdata)
 {
     char temp_nik[20], temp_masuk[20], temp_keluar[20];
@@ -1359,7 +1428,7 @@ void sewa_keluarga_malam(struct Kamar tamu)
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(301, 305);
     printf("\t\t\t\t||Berapa malam Anda hendak menyewa: ");
-    n = validasi_angka(0, 29);
+    n = validasi_angka(1, 29);
     system("cls");
     int a = tm.tm_mday + n;
     cekdata = fopen("datatamu.txt", "r");
@@ -1464,7 +1533,7 @@ void sewa_keluarga_malam(struct Kamar tamu)
                     fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
                 }
             }
-            else if (tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10)
+            else if (tm.tm_mon == 1 && 3 && 5 && 7 && 8 && 10)
             {
                 if (a > 31)
                 {
@@ -1519,7 +1588,7 @@ void sewa_keluarga_malam(struct Kamar tamu)
                     fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
                 }
             }
-            else if (tm.tm_mon == 1 || 3 || 5 || 7 || 8 || 10)
+            else if (tm.tm_mon == 1 && 3 && 5 && 7 && 8 && 10)
             {
                 if (a > 31)
                 {
@@ -1723,6 +1792,845 @@ void sewa_keluarga_bulan(struct Kamar tamu)
 
     // fclose(cekdata);
 }
+void sewa_keluarga_tahun(struct Kamar tamu)
+{
+    // waktu menggunakan localtime.
+    FILE *cekdata;
+    FILE *tulis;
+    FILE *datatamu;
+    struct Kamar kamar[15], data, pengunjung;
+    char temp_nik[16];
+    char nama_pengguna[1024];
+    // n adalah lama menyewa;
+    int temp_nomor, n, temp_total, temp_masuk, temp_keluar;
+    bool check;
+    time_t waktu, tanggal;
+    tanggal = time(NULL);
+    struct tm tm = *localtime(&tanggal);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
+    int i = 0;
+    system("cls");
+    printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
+    scanf("%[^\n]", nama_pengguna);
+    getchar();
+    /* This is supposed to be validation
+    for(int i = 0; i < 1024; i++){
+        if(((int)nama_pengguna[i] >= 0 && (int)nama_pengguna[i] <= 64) || ((int)nama_pengguna[i] >= 91 && (int)nama_pengguna[i] <= 96) || (int)nama_pengguna[i] >= 123){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Anda memasukkan karakter yang bukan huruf!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }
+    }
+    */
+    printf("\t\t\t\t||Masukkan NIK Anda: ");
+    // fflush(stdin);
+    // fgets(tamu.nik, sizeof(tamu.nik), stdin);
+    scanf("%[^\n]", tamu.nik);
+    getchar();
+    if (strlen(tamu.nik) != 16)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_keluarga_tahun(tamu);
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        if (!isdigit(tamu.nik[i]))
+        {
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            sewa_keluarga_tahun(tamu);
+        }
+    }
+    // for(int i = 0; i < 16; i++){
+    //   pengunjung.nik[i] = tamu.nik[i];
+    //}
+    /*
+    while(!feof(cekdata)){
+        fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", kamar[i].nik, &kamar[i].nomor, &kamar[i].total, kamar[i].masuk, kamar[i].keluar);
+        for(int j = 0; j < 16; j++){
+            if((int)tamu.nik[j] == (int)kamar[i].nik[j]){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                sewa_keluarga_malam(tamu);
+            }
+        }
+        i++;
+    }fclose(cekdata);*/
+    printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
+    tamu.nomor = validasi_angka(301, 305);
+    printf("\t\t\t\t||Berapa tahun Anda hendak menyewa: ");
+    n = validasi_tahun(0);
+    int a = tm.tm_mon + n;
+    system("cls");
+    cekdata = fopen("datatamu.txt", "r");
+    check = modulation_cheker(tamu, cekdata);
+    if (check == true)
+    {
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+        system("pause");
+    }
+    /*
+    if(cekdata == NULL){
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+    }else{
+        do{
+            fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
+            if(strcmp(temp_nik, tamu.nik) == 0){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }else if(temp_nomor == tamu.nomor){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }
+            else{
+                i = 0;
+            }
+        }while(!feof(cekdata));
+        fclose(cekdata);
+    }
+    */
+    else
+    {
+        /*(strcmp(data.nik, tamu.nik)!=0 && data.nomor != tamu.nomor)*/
+        switch (tamu.nomor)
+        {
+        case 301:
+            tulis = fopen("struk301.txt", "w");
+            tamu.total = n * KELUARGA_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 302:
+            tulis = fopen("struk302.txt", "w");
+            tamu.total = n * KELUARGA_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 303:
+            tulis = fopen("struk303.txt", "w");
+            tamu.total = n * KELUARGA_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 304:
+            tulis = fopen("struk304.txt", "w");
+            tamu.total = n * KELUARGA_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 305:
+            tulis = fopen("struk305.txt", "w");
+            tamu.total = n * KELUARGA_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        default:
+            printf("Dadaaaaa....");
+        }
+        datatamu = fopen("datatamu.txt", "a");
+        fprintf(datatamu, "%s,%d,%d", tamu.nik, tamu.nomor, tamu.total);
+        fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+        fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year + n);
+        fclose(datatamu);
+    }
+    // fclose(cekdata);
+
+    // fclose(cekdata);
+}
+void sewa_pribadi_malam(struct Kamar tamu)
+{
+    // waktu menggunakan localtime.
+    FILE *cekdata;
+    FILE *tulis;
+    FILE *datatamu;
+    struct Kamar kamar[15], data, pengunjung;
+    char temp_nik[16];
+    char nama_pengguna[1024];
+    // n adalah lama menyewa;
+    int temp_nomor, n, temp_total, temp_masuk, temp_keluar;
+    bool check;
+    time_t waktu, tanggal;
+    tanggal = time(NULL);
+    struct tm tm = *localtime(&tanggal);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
+    int i = 0;
+    system("cls");
+    printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
+    scanf("%[^\n]", nama_pengguna);
+    getchar();
+    /* This is supposed to be validation
+    for(int i = 0; i < 1024; i++){
+        if(((int)nama_pengguna[i] >= 0 && (int)nama_pengguna[i] <= 64) || ((int)nama_pengguna[i] >= 91 && (int)nama_pengguna[i] <= 96) || (int)nama_pengguna[i] >= 123){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Anda memasukkan karakter yang bukan huruf!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }
+    }
+    */
+    printf("\t\t\t\t||Masukkan NIK Anda: ");
+    // fflush(stdin);
+    // fgets(tamu.nik, sizeof(tamu.nik), stdin);
+    scanf("%[^\n]", tamu.nik);
+    getchar();
+    if (strlen(tamu.nik) != 16)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_pribadi_malam(tamu);
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        if (!isdigit(tamu.nik[i]))
+        {
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            sewa_pribadi_malam(tamu);
+        }
+    }
+    // for(int i = 0; i < 16; i++){
+    //   pengunjung.nik[i] = tamu.nik[i];
+    //}
+    /*
+    while(!feof(cekdata)){
+        fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", kamar[i].nik, &kamar[i].nomor, &kamar[i].total, kamar[i].masuk, kamar[i].keluar);
+        for(int j = 0; j < 16; j++){
+            if((int)tamu.nik[j] == (int)kamar[i].nik[j]){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                sewa_keluarga_malam(tamu);
+            }
+        }
+        i++;
+    }fclose(cekdata);*/
+    printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
+    tamu.nomor = validasi_angka(101, 205);
+    if (tamu.nomor != 101 && 102 && 103 && 104 && 105 && 201 && 202 && 203 && 204 && 205)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_pribadi_malam(tamu);
+    }
+    printf("\t\t\t\t||Berapa malam Anda hendak menyewa: ");
+    n = validasi_angka(1, 29);
+    system("cls");
+    int a = tm.tm_mday + n;
+    cekdata = fopen("datatamu.txt", "r");
+    check = modulation_cheker(tamu, cekdata);
+    if (check == true)
+    {
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+        system("pause");
+    }
+    /*
+    if(cekdata == NULL){
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+    }else{
+        do{
+            fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
+            if(strcmp(temp_nik, tamu.nik) == 0){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }else if(temp_nomor == tamu.nomor){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }
+            else{
+                i = 0;
+            }
+        }while(!feof(cekdata));
+        fclose(cekdata);
+    }
+    */
+    else
+    {
+        /*(strcmp(data.nik, tamu.nik)!=0 && data.nomor != tamu.nomor)*/
+        switch (tamu.nomor)
+        {
+        case 101:
+            tulis = fopen("struk101.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 102:
+            tulis = fopen("struk102.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 103:
+            tulis = fopen("struk103.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 104:
+            tulis = fopen("struk104.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 105:
+            tulis = fopen("struk105.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 201:
+            tulis = fopen("struk201.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 202:
+            tulis = fopen("struk202.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 203:
+            tulis = fopen("struk203.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 204:
+            tulis = fopen("struk204.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 205:
+            tulis = fopen("struk205.txt", "w");
+            tamu.total = n * PRIVATE_MALAM;
+            struk_malam(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        default:
+            printf("Dadaaaaa....");
+        }
+        datatamu = fopen("datatamu.txt", "a");
+        /*
+        for(int j = 0; j < 16; j++){
+            if(j >= 16) break;
+            else fprintf(datatamu, "%c", tamu.nik[j]);
+        }*/
+        fprintf(datatamu, "%s,%d,%d", tamu.nik, tamu.nomor, tamu.total);
+        if (tm.tm_year % 4 == 0)
+        {
+            if (tm.tm_mon == 12)
+            {
+                if (a > 31)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 31, (tm.tm_mon + 1) - 12, tm.tm_year + 1);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+            else if (tm.tm_mon == 2)
+            {
+                if (a > 29)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 29, tm.tm_mon + 1, tm.tm_year);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+            else if (tm.tm_mon == 1 && 3 && 5 && 7 && 8 && 10)
+            {
+                if (a > 31)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 31, tm.tm_mon + 1, tm.tm_year);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+            else
+            {
+                if (a > 30)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 30, tm.tm_mon + 1, tm.tm_year);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+        }
+        else
+        {
+            if (tm.tm_mon == 12)
+            {
+                if (a > 31)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 31, (tm.tm_mon + 1) - 12, tm.tm_year + 1);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+            else if (tm.tm_mon == 2)
+            {
+                if (a > 28)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 28, tm.tm_mon + 1, tm.tm_year);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+            else if (tm.tm_mon == 1 && 3 && 5 && 7 && 8 && 10)
+            {
+                if (a > 31)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 31, tm.tm_mon + 1, tm.tm_year);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+            else
+            {
+                if (a > 30)
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", (tm.tm_mday + n) - 30, tm.tm_mon + 1, tm.tm_year);
+                }
+                else
+                {
+                    fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                    fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday + n, tm.tm_mon, tm.tm_year);
+                }
+            }
+        }
+        fclose(datatamu);
+    }
+    // fclose(cekdata);
+
+    // fclose(cekdata);
+}
+void sewa_pribadi_bulan(struct Kamar tamu)
+{
+    // waktu menggunakan localtime.
+    FILE *cekdata;
+    FILE *tulis;
+    FILE *datatamu;
+    struct Kamar kamar[15], data, pengunjung;
+    char temp_nik[16];
+    char nama_pengguna[1024];
+    // n adalah lama menyewa;
+    int temp_nomor, n, temp_total, temp_masuk, temp_keluar;
+    bool check;
+    time_t waktu, tanggal;
+    tanggal = time(NULL);
+    struct tm tm = *localtime(&tanggal);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
+    int i = 0;
+    system("cls");
+    printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
+    scanf("%[^\n]", nama_pengguna);
+    getchar();
+    /* This is supposed to be validation
+    for(int i = 0; i < 1024; i++){
+        if(((int)nama_pengguna[i] >= 0 && (int)nama_pengguna[i] <= 64) || ((int)nama_pengguna[i] >= 91 && (int)nama_pengguna[i] <= 96) || (int)nama_pengguna[i] >= 123){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Anda memasukkan karakter yang bukan huruf!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }
+    }
+    */
+    printf("\t\t\t\t||Masukkan NIK Anda: ");
+    // fflush(stdin);
+    // fgets(tamu.nik, sizeof(tamu.nik), stdin);
+    scanf("%[^\n]", tamu.nik);
+    getchar();
+    if (strlen(tamu.nik) != 16)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_pribadi_bulan(tamu);
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        if (!isdigit(tamu.nik[i]))
+        {
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            sewa_pribadi_bulan(tamu);
+        }
+    }
+    // for(int i = 0; i < 16; i++){
+    //   pengunjung.nik[i] = tamu.nik[i];
+    //}
+    /*
+    while(!feof(cekdata)){
+        fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", kamar[i].nik, &kamar[i].nomor, &kamar[i].total, kamar[i].masuk, kamar[i].keluar);
+        for(int j = 0; j < 16; j++){
+            if((int)tamu.nik[j] == (int)kamar[i].nik[j]){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                sewa_keluarga_malam(tamu);
+            }
+        }
+        i++;
+    }fclose(cekdata);*/
+    printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
+    tamu.nomor = validasi_angka(101, 205);
+    if (tamu.nomor != 101 && 102 && 103 && 104 && 105 && 201 && 202 && 203 && 204 && 205)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_pribadi_bulan(tamu);
+    }
+    printf("\t\t\t\t||Berapa bulan Anda hendak menyewa: ");
+    n = validasi_angka(0, 12);
+    int a = tm.tm_mon + n;
+    system("cls");
+    cekdata = fopen("datatamu.txt", "r");
+    check = modulation_cheker(tamu, cekdata);
+    if (check == true)
+    {
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+        system("pause");
+    }
+    /*
+    if(cekdata == NULL){
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+    }else{
+        do{
+            fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
+            if(strcmp(temp_nik, tamu.nik) == 0){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }else if(temp_nomor == tamu.nomor){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }
+            else{
+                i = 0;
+            }
+        }while(!feof(cekdata));
+        fclose(cekdata);
+    }
+    */
+    else
+    {
+        /*(strcmp(data.nik, tamu.nik)!=0 && data.nomor != tamu.nomor)*/
+        switch (tamu.nomor)
+        {
+        case 101:
+            tulis = fopen("struk101.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 102:
+            tulis = fopen("struk102.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 103:
+            tulis = fopen("struk103.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 104:
+            tulis = fopen("struk104.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 105:
+            tulis = fopen("struk105.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 201:
+            tulis = fopen("struk201.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 202:
+            tulis = fopen("struk202.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 203:
+            tulis = fopen("struk203.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 204:
+            tulis = fopen("struk204.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 205:
+            tulis = fopen("struk205.txt", "w");
+            tamu.total = n * PRIVATE_BULAN;
+            struk_bulan(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        default:
+            printf("Dadaaaaa....");
+        }
+        datatamu = fopen("datatamu.txt", "a");
+        /*
+        for(int j = 0; j < 16; j++){
+            if(j >= 16) break;
+            else fprintf(datatamu, "%c", tamu.nik[j]);
+        }*/
+        fprintf(datatamu, "%s,%d,%d", tamu.nik, tamu.nomor, tamu.total);
+        if (tm.tm_mon == 12)
+        {
+            fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+            fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday, (tm.tm_mon + n) - 12, tm.tm_year + 1);
+        }
+
+        else
+        {
+            if (a > 12)
+            {
+                fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday, (tm.tm_mon + n) - 12, tm.tm_year + 1);
+            }
+            else
+            {
+                fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon + n, tm.tm_year);
+            }
+        }
+        fclose(datatamu);
+    }
+    // fclose(cekdata);
+
+    // fclose(cekdata);
+}
+void sewa_pribadi_tahun(struct Kamar tamu)
+{
+    // waktu menggunakan localtime.
+    FILE *cekdata;
+    FILE *tulis;
+    FILE *datatamu;
+    struct Kamar kamar[15], data, pengunjung;
+    char temp_nik[16];
+    char nama_pengguna[1024];
+    // n adalah lama menyewa;
+    int temp_nomor, n, temp_total, temp_masuk, temp_keluar;
+    bool check;
+    time_t waktu, tanggal;
+    tanggal = time(NULL);
+    struct tm tm = *localtime(&tanggal);
+    tm.tm_year = tm.tm_year + 1900;
+    tm.tm_mon = tm.tm_mon + 1;
+    int i = 0;
+    system("cls");
+    printf("\t\t\t\t||Masukkan nama lengkap Anda: ");
+    scanf("%[^\n]", nama_pengguna);
+    getchar();
+    /* This is supposed to be validation
+    for(int i = 0; i < 1024; i++){
+        if(((int)nama_pengguna[i] >= 0 && (int)nama_pengguna[i] <= 64) || ((int)nama_pengguna[i] >= 91 && (int)nama_pengguna[i] <= 96) || (int)nama_pengguna[i] >= 123){
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Anda memasukkan karakter yang bukan huruf!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            family_machine_night(tamu);
+        }
+    }
+    */
+    printf("\t\t\t\t||Masukkan NIK Anda: ");
+    // fflush(stdin);
+    // fgets(tamu.nik, sizeof(tamu.nik), stdin);
+    scanf("%[^\n]", tamu.nik);
+    getchar();
+    if (strlen(tamu.nik) != 16)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_keluarga_bulan(tamu);
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        if (!isdigit(tamu.nik[i]))
+        {
+            printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+            system("pause");
+            sewa_keluarga_bulan(tamu);
+        }
+    }
+    // for(int i = 0; i < 16; i++){
+    //   pengunjung.nik[i] = tamu.nik[i];
+    //}
+    /*
+    while(!feof(cekdata)){
+        fscanf(cekdata, "%16[^,],%d,%d,%11[^,],%11[^,]\n", kamar[i].nik, &kamar[i].nomor, &kamar[i].total, kamar[i].masuk, kamar[i].keluar);
+        for(int j = 0; j < 16; j++){
+            if((int)tamu.nik[j] == (int)kamar[i].nik[j]){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                sewa_keluarga_malam(tamu);
+            }
+        }
+        i++;
+    }fclose(cekdata);*/
+    printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
+    tamu.nomor = validasi_angka(101, 205);
+    if (tamu.nomor != 101 && 102 && 103 && 104 && 105 && 201 && 202 && 203 && 204 && 205)
+    {
+        printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
+        system("pause");
+        sewa_pribadi_tahun(tamu);
+    }
+    printf("\t\t\t\t||Berapa tahun Anda hendak menyewa: ");
+    n = validasi_tahun(0);
+    int a = tm.tm_mon + n;
+    system("cls");
+    cekdata = fopen("datatamu.txt", "r");
+    check = modulation_cheker(tamu, cekdata);
+    if (check == true)
+    {
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+        system("pause");
+    }
+    /*
+    if(cekdata == NULL){
+        printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t Silakan memesan kamar yang lain.\n");
+    }else{
+        do{
+            fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
+            if(strcmp(temp_nik, tamu.nik) == 0){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }else if(temp_nomor == tamu.nomor){
+                printf("\t\t\t\t Maaf kamar sudah dipesan,\n\t\t\t\t silakan memesan kamar yang lain.\n");
+                system("pause");
+                i = 1;
+            }
+            else{
+                i = 0;
+            }
+        }while(!feof(cekdata));
+        fclose(cekdata);
+    }
+    */
+    else
+    {
+        /*(strcmp(data.nik, tamu.nik)!=0 && data.nomor != tamu.nomor)*/
+        switch (tamu.nomor)
+        {
+        case 101:
+            tulis = fopen("struk101.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 102:
+            tulis = fopen("struk102.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 103:
+            tulis = fopen("struk103.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 104:
+            tulis = fopen("struk104.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 105:
+            tulis = fopen("struk105.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 201:
+            tulis = fopen("struk201.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 202:
+            tulis = fopen("struk202.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 203:
+            tulis = fopen("struk203.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 204:
+            tulis = fopen("struk204.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        case 205:
+            tulis = fopen("struk205.txt", "w");
+            tamu.total = n * PRIVATE_TAHUN;
+            struk_tahun(waktu, nama_pengguna, tamu, n, tamu.total, tulis);
+            fclose(tulis);
+            break;
+        default:
+            printf("Dadaaaaa....");
+        }
+        datatamu = fopen("datatamu.txt", "a");
+        fprintf(datatamu, "%s,%d,%d", tamu.nik, tamu.nomor, tamu.total);
+        fprintf(datatamu, ",%02d/%02d/%04d,", tm.tm_mday, tm.tm_mon, tm.tm_year);
+        fprintf(datatamu, "%02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year + n);
+        fclose(datatamu);
+    }
+    // fclose(cekdata);
+
+    // fclose(cekdata);
+}
 // PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR KELUARGA
 void fasilitas_keluarga()
 {
@@ -1791,7 +2699,8 @@ void fasilitas_keluarga()
         sewa_keluarga_bulan(tamu);
         break;
     case 3:
-        // family_machine_year(tamu);
+        sewa_keluarga_tahun(tamu);
+        break;
     default:
         printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
@@ -1799,6 +2708,7 @@ void fasilitas_keluarga()
 // PROSEDUR UNTUK MENAMPILKAN FASILITAS KAMAR PRIBADI
 void fasilitas_pribadi()
 {
+    struct Kamar tamu;
     printf("\t\t\t\t|| ================================================== ||\n");
     printf("\t\t\t\t||               Facility of Private Room             ||\n");
     printf("\t\t\t\t|| ================================================== ||\n");
@@ -1857,8 +2767,13 @@ void fasilitas_pribadi()
     switch (pilih)
     {
     case 1:
+        sewa_pribadi_malam(tamu);
         break;
     case 2:
+        sewa_pribadi_bulan(tamu);
+        break;
+    case 3:
+        sewa_pribadi_tahun(tamu);
         break;
     default:
         printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
