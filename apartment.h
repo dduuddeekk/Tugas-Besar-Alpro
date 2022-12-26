@@ -3398,7 +3398,7 @@ void breakfast_print2(struct Kamar tamu, FILE *tulis, int n, char nama_pengguna[
     fprintf(tulis, "==================================================\n");
     char buffer[255];
     FILE *breakfast = fopen("breakfastbook.txt","a");
-    sprintf(buffer, "%s,%d,%d,%s,%s\n", tamu.nik, tamu.nomor, total, tamu.masuk, tamu.keluar);
+    sprintf(buffer, "%s,%d,%d,%s,%s\n", tamu.nik, tamu.nomor, total-tamu.total, tamu.masuk, tamu.keluar);
     fprintf(breakfast, "%s", buffer);
     fclose(breakfast);
 }
