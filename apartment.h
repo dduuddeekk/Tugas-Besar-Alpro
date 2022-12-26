@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #define KELUARGA_MALAM 500000
 #define KELUARGA_BULAN 13500000
 #define KELUARGA_TAHUN 156000000
@@ -3481,7 +3482,7 @@ void batalkan_pesanan()
     tamu.nomor = validasi_angka(101, 305);
     cekdata = fopen("datatamu.txt", "r");
     checker = modulation_cancelation(tamu, cekdata);
-    /*
+    fclose(cekdata);
      if (checker == true)
      {
          printf("\t\t\t\t Maaf Anda belum memesan apartemen.\n\t\t\t\t Atau Anda menginput data yang salah.\n\t\t\t\t Silakan kembali ke halaman awal.\n");
@@ -3490,9 +3491,9 @@ void batalkan_pesanan()
          mainmenu();
          exit(0);
      }
-     */
-    // else
-    //{
+    
+    else
+    {
     char buffer[1024];
     temp = fopen("datatamu.txt", "r");
     do
@@ -3535,6 +3536,7 @@ void batalkan_pesanan()
     fclose(tulisdata);
     fclose(batal);
     renama();
+    }
 }
 void renama()
 {
