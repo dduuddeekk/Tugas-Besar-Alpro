@@ -3456,6 +3456,7 @@ bool modulation_cancelation(struct Kamar tamu, FILE *fptr)
         {
             return true;
         }
+        i++;
     } while (!feof(fptr));
     fclose(fptr);
 }
