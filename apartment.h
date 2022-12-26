@@ -261,55 +261,162 @@ void check_apartment()
             printf("\t\t\t\t Terima kasih karena telah menggunakan program ini.\n");
     }
 } */
+bool modulation_cheker3(struct Kamar tamu, FILE *cekdata)
+{
+    char temp_nik[20], temp_masuk[20], temp_keluar[20];
+    int temp_nomor, temp_total;
+    if (cekdata == NULL)
+    {
+        cekdata = fopen("datatamu.txt", "w");
+        return true;
+    }
+    else
+    {
+        do
+        {
+            fscanf(cekdata, "%19[^,],%d,%d,%19[^,],%19[^\n]\n", temp_nik, &temp_nomor, &temp_total, temp_masuk, temp_keluar);
+            if (strcmp(temp_nik, tamu.nik) != 0)
+            {
+                return true;
+            }
+            else if (temp_nomor != tamu.nomor)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } while (!feof(cekdata));
+    }
+    fclose(cekdata);
+}
 void tampilkan_tempo(int nomor)
 { // menampilkan jatuh tempo, tapi belum semua.
     FILE *buka;
+    char buffer[255];
+    system("cls");
     switch (nomor)
     {
     case 101:
         buka = fopen("struk101.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 102:
         buka = fopen("struk102.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 103:
         buka = fopen("struk103.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 104:
         buka = fopen("struk104.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 105:
         buka = fopen("struk105.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 201:
         buka = fopen("struk201.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 202:
         buka = fopen("struk202.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 203:
         buka = fopen("struk203.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 204:
         buka = fopen("struk204.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 205:
         buka = fopen("struk205.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 301:
         buka = fopen("struk301.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 302:
         buka = fopen("struk302.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 303:
         buka = fopen("struk303.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 304:
         buka = fopen("struk304.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     case 305:
         buka = fopen("struk305.txt", "r");
+        while (fgets(buffer, 255, buka) != NULL)
+        {
+            printf("%s", buffer);
+        }
+        fclose(buka);
         break;
     default:
         printf("\t\t\t\t Tidak ada.\n");
@@ -318,9 +425,8 @@ void tampilkan_tempo(int nomor)
 void pengecekan_tempo()
 { // jatuh tempo
     FILE *cekdata = fopen("datatamu.txt", "r");
-    struct Kamar tamu;
-    char nik[16];
-    int nomor;
+    struct Kamar tamu, tempo;
+    bool checker;
     system("cls");
     printf("\t\t\t\t||_________________________________________________||\n");
     printf("\t\t\t\t||                                                 ||\n");
@@ -328,10 +434,36 @@ void pengecekan_tempo()
     printf("\t\t\t\t||                                                 ||\n");
     printf("\t\t\t\t||=================================================||\n");
     printf("\t\t\t\t||Silakan masukkan NIK Anda: ");
-    scanf("%[^\n]", nik);
+    scanf("%[^\n]", tempo.nik);
     getchar();
+    if (strlen(tempo.nik) != 16)
+    {
+        printf("\t\t\t\t Inputan Anda Salah!\n");
+        system("pause");
+        pengecekan_tempo();
+    }
+    for (int i = 0; i < 16; i++)
+    {
+        if (!isdigit(tempo.nik[i]))
+        {
+            printf("\t\t\t\t Inputan Anda Salah!\n");
+            system("pause");
+            pengecekan_tempo();
+        }
+    }
     printf("\t\t\t\t||Silakan masukkan nomor kamar Anda: ");
-    nomor = validasi_angka(101, 305);
+    tempo.nomor = validasi_angka(101, 305);
+    checker = modulation_cheker3(tempo, cekdata);
+    fclose(cekdata);
+    if (checker == true)
+    {
+        printf("\t\t\t\t Data tidak ada ....\n");
+    }
+    else
+    {
+        tampilkan_tempo(tempo.nomor);
+    }
+    /*
     if (cekdata == NULL)
     {
         printf("\t\t\t\t Maaf data tamu tidak ada!\n");
@@ -354,7 +486,7 @@ void pengecekan_tempo()
             }
         } while (!feof(cekdata));
     }
-    fclose(cekdata);
+    fclose(cekdata);*/
 }
 void struk_malam(time_t waktu, char nama_pengguna[1024], struct Kamar tamu, int n, int harga, FILE *tulis)
 {
@@ -2009,7 +2141,7 @@ void sewa_pribadi_malam(struct Kamar tamu)
     }fclose(cekdata);*/
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(101, 205);
-    if (tamu.nomor != 101 && 102 && 103 && 104 && 105 && 201 && 202 && 203 && 204 && 205)
+    if (tamu.nomor != 101 && tamu.nomor != 102 && tamu.nomor != 103 && tamu.nomor != 104 && tamu.nomor != 105 && tamu.nomor != 201 && tamu.nomor != 202 && tamu.nomor != 203 && tamu.nomor != 204 && tamu.nomor != 205)
     {
         printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
         system("pause");
@@ -2307,7 +2439,7 @@ void sewa_pribadi_bulan(struct Kamar tamu)
     }fclose(cekdata);*/
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(101, 205);
-    if (tamu.nomor != 101 && 102 && 103 && 104 && 105 && 201 && 202 && 203 && 204 && 205)
+    if (tamu.nomor != 101 && tamu.nomor != 102 && tamu.nomor != 103 && tamu.nomor != 104 && tamu.nomor != 105 && tamu.nomor != 201 && tamu.nomor != 202 && tamu.nomor != 203 && tamu.nomor != 204 && tamu.nomor != 205)
     {
         printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
         system("pause");
@@ -2514,7 +2646,7 @@ void sewa_pribadi_tahun(struct Kamar tamu)
     }fclose(cekdata);*/
     printf("\t\t\t\t||Masukkan nomor kamar yang diinginkan: ");
     tamu.nomor = validasi_angka(101, 205);
-    if (tamu.nomor != 101 && 102 && 103 && 104 && 105 && 201 && 202 && 203 && 204 && 205)
+    if (tamu.nomor != 101 && tamu.nomor != 102 && tamu.nomor != 103 && tamu.nomor != 104 && tamu.nomor != 105 && tamu.nomor != 201 && tamu.nomor != 202 && tamu.nomor != 203 && tamu.nomor != 204 && tamu.nomor != 205)
     {
         printf("\t\t\t\t Inputan salah!\n\t\t\t\t Harap masukkan kembali!\n");
         system("pause");
