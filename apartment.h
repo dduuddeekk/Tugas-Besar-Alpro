@@ -3462,6 +3462,7 @@ bool modulation_cancelation(struct Kamar tamu, FILE *fptr)
         else
         {
             return true;
+            continue;
         }
         i++;
     } while (!feof(fptr));
