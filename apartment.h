@@ -13,7 +13,7 @@
 #define PRIVATE_MALAM 350000
 #define PRIVATE_BULAN 9000000
 #define PRIVATE_TAHUN 98000000
-#define SARAPAN 129999
+#define SARAPAN 59999
 void mainmenu();
 int validasi_angka(int range1, int range2)
 {
