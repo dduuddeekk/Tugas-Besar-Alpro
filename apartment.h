@@ -18,6 +18,7 @@ struct Apartemen
 {
     char nik[20], masuk[20], keluar[20];
     int nomor, total, hari;
+    //Menambahkan variabel hari untuk mengisi data hari yang terdapat dalam datatamu.txt
 };
 void mainmenu();
 void case_hapus_struk(int nomor);
@@ -25,7 +26,7 @@ void case_tempo(int nomor, FILE *buka);
 void struk_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day, FILE *fptr);
 void case_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day, FILE *fptr);
 int validasi_angka(int range1, int range2)
-{
+{ //Validasi integer biasa.
     char buffer[255], invalid;
     int valid;
     scanf("%[^\n]", buffer);
@@ -41,7 +42,7 @@ int validasi_angka(int range1, int range2)
     }
 }
 int validasi_tahun(int minimum)
-{
+{ //Validasi integer untuk tahun.
     char buffer[255], invalid;
     int valid;
     scanf("%[^\n]", buffer);
@@ -57,7 +58,7 @@ int validasi_tahun(int minimum)
     }
 }
 void pengecekkan_apartemen()
-{
+{ //Program melakukan pengecekkan apartemen yang sudah diisi. Jika tidak ada apartemen yang dipesan hanya akan menampilkan data yang kosong.
     struct Apartemen tempo;
     FILE *ambil = fopen("datatamu.txt", "r");
     int i = 0, nomor[15];
@@ -69,6 +70,7 @@ void pengecekkan_apartemen()
         i++;
     }
     fclose(ambil);
+    //Menggunakan bubble sort.
     int n = sizeof(nomor) / sizeof(nomor[0]);
     for (int j = 0; j < n - 1; j++)
     {
@@ -91,7 +93,7 @@ void pengecekkan_apartemen()
     }
 }
 void struk_malam(int day, int month, int year, int n, char nama[1024], struct Apartemen tamu, FILE *tulisdata)
-{
+{ //Ini hanya untuk mendisplay sebuah struk, tidak lebih.
     system("cls");
     time_t tiktok = time(NULL);
     int a_day = tiktok / 86400;
@@ -1121,7 +1123,8 @@ void case_pesan_tahun(struct Apartemen tamu, struct tm tm, int n, char nama[1024
     }
 }
 bool modulasi_pemesanan(char nik[20], int nomor, FILE *cekdata)
-{
+{ //Ini merupakan sebuah validasi input untuk memeriksa apakah apartemen sudah dipesan atau belum.
+//Untuk seterusnya, modulasi ini akan terus ada.
     struct Apartemen tempo;
     int flag;
     do
@@ -1143,7 +1146,7 @@ bool modulasi_pemesanan(char nik[20], int nomor, FILE *cekdata)
         return true;
 }
 void sewa_keluarga_malam()
-{
+{ //merupakan sebuah prosedur pemesanan, dari sini ke bawah Anda akan melihat beberapa prosedur serupa yang saling berhubungan dengan prosedur modulasi di atas.
     char buff[255];
     struct Apartemen tamu;
     time_t waktu;
@@ -1197,7 +1200,7 @@ void sewa_keluarga_malam()
     n = validasi_angka(1, 29);
     tamu.total = n * KELUARGA_MALAM;
     cekdata = fopen("datatamu.txt", "r");
-    checker = modulasi_pemesanan(tamu.nik, tamu.nomor, cekdata);
+    checker = modulasi_pemesanan(tamu.nik, tamu.nomor, cekdata); //Ini adalah cara penggunaan modulasinya.
     fclose(cekdata);
     if (checker == true)
     {
@@ -1612,10 +1615,11 @@ bool modulasi_pembatalan(char nik[20], int nomor, FILE *cekdata)
     else
         return true;
 }
+// ini adalah pembatalan pesanan, ini yang di-update.
 void batalkan_pesanan()
 {
     time_t waktu = time(NULL);
-    int a_day = waktu / 86400;
+    int a_day = waktu / 86400; //Ini adalah cara kami mengakalinya tanpa menggunakan difftime.
     time_t wita = time(NULL);
     struct tm tm = *localtime(&wita);
     struct Apartemen tamu, tempo;
@@ -1669,12 +1673,12 @@ void batalkan_pesanan()
             {
                 system("cls");
                 double potongan = (0.51) * tempo.total;
-                tempo.hari = a_day - tempo.hari;
+                tempo.hari = a_day - tempo.hari; //Begini cara perhitungan harinya.
                 printf("||    Tanggal Memesan          : %s\n", tempo.keluar);
                 printf("||    Tanggal Pembatalan       : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year);
                 sprintf(buf, "%02d/%02d/%04d", tm.tm_mday, tm.tm_mon, tm.tm_year);
                 printf("||    Pengembalian Dana (49%%) : Rp %.0lf\n", (double)(tempo.total - potongan));
-                printf("||    Lama Menggunakan Layanan : %d\n", tempo.hari);
+                printf("||    Lama Menggunakan Layanan : %d\n", tempo.hari); //ini adalah bentuk update yang kami lakukan.
                 fprintf(tulisriwayat, "%s,%d,%.0lf,%s,%s,%d\n", tempo.nik, tempo.nomor, (double)(tempo.total - potongan), tempo.masuk, buf, tempo.hari);
                 system("pause");
                 continue;
@@ -1813,7 +1817,7 @@ bool modulasi_tempo(char nik[20], int nomor, FILE *cekdata)
         return true;
 }
 void pengecekkan_tempo()
-{
+{ //Ini adalah pengecekkan tempo apartemen, di sini hanya menampilkan struk pelanggan saja agar lebih efisien.
     struct Apartemen tamu;
     FILE *cekdata;
     FILE *buka;
@@ -2006,7 +2010,7 @@ bool modulasi_laundry(char nik[20], int nomor, FILE *cekdata)
         return true;
 }
 void laundry()
-{
+{ //Layanan tambahan, Laundry.
     struct Apartemen tamu;
     char nama[1024];
     FILE *cekdata;
@@ -2069,6 +2073,15 @@ void laundry()
         mainmenu();
         exit(0);
     }
+    /*
+     * Dalam layanan ini, kami tidak memasukkan datanya ke dalam datatamu.txt.
+     * Akan tetapi, kami membuat sebuah data baru berupa kartu laundry.
+     * Hal ini didasari oleh ide di mana laundry dihitung berdasarkan kiloan pakaian yang dicuci.
+     * Jika kamu menggunakan parameter kiloan tersebut, kami akan berakhir dengan membuat program layanan laundry.
+     * Program layanan laundry sudah dibuat oleh kelompok lain.
+     * Jika kami buat, hanya hanya akan berakhir dengan meniru algoritma program mereka.
+     * Harap dimaklumi, terima kasih.
+     */
     else
     {
         system("cls");
@@ -2158,7 +2171,7 @@ bool modulasi_sarapan(char nik[20], int nomor, FILE *cekdata)
         return true;
 }
 void breakfast()
-{
+{ // Ini adalah layanan sarapan.
     struct Apartemen tamu;
     char nama[1024];
     FILE *cekdata;
@@ -2354,7 +2367,7 @@ void case_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day, 
     fclose(fptr);
 }
 void struk_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day, FILE *fptr)
-{
+{ //Dari layanan sarapan, kami hanya menimpa struk yang telah dibuat dan menambahkan total serta layanan sarapan berapa hari.
     system("cls");
     printf("=====================================================");
     printf("\n");
@@ -2391,6 +2404,7 @@ void struk_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day,
     fprintf(pagi, "%s", buffer);
     fclose(pagi);
 }
+//Setelah ini merupakan akses ke beberapa fungsi dan prosedur yang terdapat di atas.
 void fasilitas_keluarga()
 {
     system("cls");
@@ -2602,6 +2616,7 @@ void layanan_tambahan()
     }
 }
 int ulang_ulang();
+//Ini merupakan menu utama dari header ini.
 void mainmenu()
 {
     int pilih, ulang;
