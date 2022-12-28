@@ -52,4 +52,4 @@ Untuk keterangan lebih lanjut dapat dilihat di komen yang terdapat di dalam *hea
 
 ## AKHIR KATA
 
-Usaha dosen pengampu dalam membimbing kami sangat luar biasa, kami mengucapkan banyak terima kasih karena dapat belajar berbagai hal dan hasrat untuk ingin tahu dan mencari kami selalu terpancing.
+Usaha dosen pengampu dalam membimbing kami sangat luar biasa, kami mengucapkan banyak terima kasih karena dapat belajar berbagai hal dan hasrat untuk ingin tahu dan mencari kami selalu terpancing. Jika Anda (siapa pun yang menggunakan program ini) menemukkan beberapa kesalahan program, harap segera menghubungi kami agar dapat segera kami *update*. Sekali lagi, terima kasih.
