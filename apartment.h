@@ -1674,8 +1674,8 @@ void batalkan_pesanan()
                 system("cls");
                 double potongan = (0.51) * tempo.total;
                 tempo.hari = a_day - tempo.hari; //Begini cara perhitungan harinya.
-                printf("||    Tanggal Memesan          : %s\n", tempo.keluar);
-                printf("||    Tanggal Pembatalan       : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon, tm.tm_year);
+                printf("||    Tanggal Memesan          : %s\n", tempo.masuk);
+                printf("||    Tanggal Pembatalan       : %02d/%02d/%04d\n", tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
                 sprintf(buf, "%02d/%02d/%04d", tm.tm_mday, tm.tm_mon, tm.tm_year);
                 printf("||    Pengembalian Dana (49%%) : Rp %.0lf\n", (double)(tempo.total - potongan));
                 printf("||    Lama Menggunakan Layanan : %d\n", tempo.hari); //ini adalah bentuk update yang kami lakukan.
@@ -1856,11 +1856,12 @@ void pengecekkan_tempo()
     {
         case_tempo(tamu.nomor, buka);
         fclose(buka);
+        system("pause");
     }
 }
 void case_tempo(int nomor, FILE *buka)
 {
-    char buffer[1024];
+    char buffer[255];
     switch (nomor)
     {
     case 101:
@@ -2369,34 +2370,34 @@ void case_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day, 
 void struk_breakfast(struct Apartemen tamu, char nama[1024], int harga, int day, FILE *fptr)
 { //Dari layanan sarapan, kami hanya menimpa struk yang telah dibuat dan menambahkan total serta layanan sarapan berapa hari.
     system("cls");
-    printf("=====================================================");
+    printf("=====================================================\n");
     printf("\n");
     printf("    Nama Pemilik     : %s\n", nama);
     printf("    NIK Pemilik      : %s\n", tamu.nik);
-    printf("    Nomor Apartemen  : %s\n", tamu.nomor);
+    printf("    Nomor Apartemen  : %d\n", tamu.nomor);
     printf("    Layanan Tambahan : Breakfast %d hari\n", day);
-    printf("    Total Pembayaran : %s\n", harga);
+    printf("    Total Pembayaran : %d\n", harga);
     printf("\n");
-    printf("=====================================================");
+    printf("=====================================================\n");
     printf("\n");
     printf("    Tanggal Pemesanan: %s\n", tamu.masuk);
     printf("    Jatuh Tempo      : %s\n", tamu.keluar);
     printf("\n");
-    printf("=====================================================");
-    fprintf(fptr, "=====================================================");
+    printf("=====================================================\n");
+    fprintf(fptr, "=====================================================\n");
     fprintf(fptr, "\n");
     fprintf(fptr, "    Nama Pemilik     : %s\n", nama);
     fprintf(fptr, "    NIK Pemilik      : %s\n", tamu.nik);
-    fprintf(fptr, "    Nomor Apartemen  : %s\n", tamu.nomor);
+    fprintf(fptr, "    Nomor Apartemen  : %d\n", tamu.nomor);
     fprintf(fptr, "    Layanan Tambahan : Breakfast %d hari\n", day);
-    fprintf(fptr, "    Total Pembayaran : %s\n", harga);
+    fprintf(fptr, "    Total Pembayaran : %d\n", harga);
     fprintf(fptr, "\n");
-    fprintf(fptr, "=====================================================");
+    fprintf(fptr, "=====================================================\n");
     fprintf(fptr, "\n");
     fprintf(fptr, "    Tanggal Pemesanan: %s\n", tamu.masuk);
     fprintf(fptr, "    Jatuh Tempo      : %s\n", tamu.keluar);
     fprintf(fptr, "\n");
-    fprintf(fptr, "=====================================================");
+    fprintf(fptr, "=====================================================\n");
     fclose(fptr);
     FILE *pagi = fopen("databreakfast.txt", "a");
     char buffer[1024];
